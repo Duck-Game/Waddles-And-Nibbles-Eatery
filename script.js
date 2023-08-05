@@ -37,6 +37,8 @@ loadSprite('peppers', 'peppers.png')
 
 // loadSprite('cheese', 'cheese.png')
 
+//setting sprite variables
+
 const rat = add([sprite('rat'), pos(80, 168), area(), body()]);
 const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
 const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
@@ -49,9 +51,13 @@ const lettuceTable = add([sprite('lettuce-table'), pos(20, 350), scale(1.2), are
 const pepperTable = add([sprite('pepper-table'), pos(50, 410), scale(1.2), area(), body({ isStatic: true })]);
 
 
+//movement
 
 onKeyDown('right', () => {
+  
+  // how to change sprite
   // rat.use(sprite('cheese'))
+  
   rat.move(230, 0)
 });
 
@@ -67,13 +73,12 @@ onKeyDown('down', () => {
   rat.move(0, 230)
 });
 
+
+
 // const cheese = add([sprite('cheese'), pos(300, 40), area(), body({ isStatic: true }), 'cheese']);
 
 
-
-
-
-//random order
+//random order function
 let foods = ['cheese', 'meat', 'lettuce', 'pepper']
 
 const randomArray = (length) => {
@@ -96,7 +101,7 @@ let empty = ['cheese']
 const duckContainer = []
 let score = 0;
 
-//
+//score function whenever something collides
 rat.onCollide("trash", () => {
   duckContainer.push('cheese')
   if (duckContainer.toString() === empty.toString()) {
@@ -107,6 +112,8 @@ rat.onCollide("trash", () => {
 });
 
 // debug.log(duckContainer)
+
+//text example
 
 // const score1 = add([
 //   text("Score: 0", {
