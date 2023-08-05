@@ -7,6 +7,9 @@ add([
   scale(1)
 ])
 
+//loading font
+loadFont('arcade', 'ARCADECLASSIC.TTF')
+
 //wall boundry
 add([
   rect(width(), 2),
@@ -104,9 +107,6 @@ rat.onCollide("trash", () => {
 });
 
 // debug.log(duckContainer)
-
-
-// loadFont('arcade', 'ARCADECLASSIC.TTF')
 
 // const score1 = add([
 //   text("Score: 0", {
