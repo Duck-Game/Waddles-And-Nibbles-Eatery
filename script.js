@@ -50,11 +50,11 @@ const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area
 const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
 const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
 
-const breadTable = add([sprite('bread-table'), pos(80, 200), scale(1.2), area(), body({ isStatic: true }), 'bread']);
-const cheeseTable = add([sprite('cheese-table'), pos(80, 250), scale(1.2), area(), body({ isStatic: true }), 'cheese']);
-const meatTable = add([sprite('meat-table'), pos(90, 300), scale(1.2), area(), body({ isStatic: true }), 'meat']);
-const lettuceTable = add([sprite('lettuce-table'), pos(20, 350), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
-const pepperTable = add([sprite('pepper-table'), pos(50, 410), scale(1.2), area(), body({ isStatic: true }), 'pepper']);
+const breadTable = add([sprite('bread-table'), pos(300, 500), scale(1.2), area(), body({ isStatic: true }), 'bread']);
+const cheeseTable = add([sprite('cheese-table'), pos(500, 500), scale(1.2), area(), body({ isStatic: true }), 'cheese']);
+const meatTable = add([sprite('meat-table'), pos(700, 500), scale(1.2), area(), body({ isStatic: true }), 'meat']);
+const lettuceTable = add([sprite('lettuce-table'), pos(900, 500), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
+const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'pepper']);
 
 
 //movement duck1
@@ -130,7 +130,7 @@ const foodOrder = randomArray(3);
 
 //display food order function
 const displayOrder = () => {
-  let positionY = 250
+  let positionY = 150
   for(let i = 0; i < foodOrder.length; i++) {
     add([sprite(foodOrder[i]), pos(350, positionY), scale(1.8)]);
     positionY += 70
