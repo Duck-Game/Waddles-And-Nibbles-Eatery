@@ -45,18 +45,19 @@ loadSprite('left-duck', 'sprites/left-duck.png')
 
 // const rat = add([sprite('rat'), pos(80, 168), area(), body()]);
 const duck = add([sprite('front-duck'), pos(80, 168),scale(2.5) ,area(), body()]);
+const duck2 = add([sprite('front-duck'), pos(80, 168),scale(2.5) ,area(), body()]);
 const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
 const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
 const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
 
-const breadTable = add([sprite('bread-table'), pos(80, 200), scale(1.2), area(), body({ isStatic: true })]);
-const cheeseTable = add([sprite('cheese-table'), pos(80, 250), scale(1.2), area(), body({ isStatic: true })]);
-const meatTable = add([sprite('meat-table'), pos(90, 300), scale(1.2), area(), body({ isStatic: true })]);
-const lettuceTable = add([sprite('lettuce-table'), pos(20, 350), scale(1.2), area(), body({ isStatic: true })]);
-const pepperTable = add([sprite('pepper-table'), pos(50, 410), scale(1.2), area(), body({ isStatic: true })]);
+const breadTable = add([sprite('bread-table'), pos(80, 200), scale(1.2), area(), body({ isStatic: true }), 'bread']);
+const cheeseTable = add([sprite('cheese-table'), pos(80, 250), scale(1.2), area(), body({ isStatic: true }), 'cheese']);
+const meatTable = add([sprite('meat-table'), pos(90, 300), scale(1.2), area(), body({ isStatic: true }), 'meat']);
+const lettuceTable = add([sprite('lettuce-table'), pos(20, 350), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
+const pepperTable = add([sprite('pepper-table'), pos(50, 410), scale(1.2), area(), body({ isStatic: true }), 'pepper']);
 
 
-//movement
+//movement duck1
 
 onKeyDown('right', () => {
   
@@ -79,6 +80,31 @@ onKeyDown('up', () => {
 onKeyDown('down', () => {
   duck.use(sprite('front-duck'))
   duck.move(0, 230)
+});
+
+// movement duck 2
+
+onKeyDown('d', () => {
+  
+  // how to change sprite
+  // rat.use(sprite('cheese'))
+  duck2.use(sprite('right-duck'))
+  duck2.move(230, 0)
+});
+
+onKeyDown('a', () => {
+  duck2.use(sprite('left-duck'))
+  duck2.move(-230, 0)
+});
+
+onKeyDown('w', () => {
+  duck2.use(sprite('back-duck'))
+  duck2.move(0, -230)
+});
+
+onKeyDown('s', () => {
+  duck2.use(sprite('front-duck'))
+  duck2.move(0, 230)
 });
 
 
@@ -111,14 +137,38 @@ let score = 0;
 
 //score function whenever something collides
 duck.onCollide("trash", () => {
-  duckContainer.push('cheese')
-  if (duckContainer.toString() === empty.toString()) {
-    score++
-  }
+  duckContainer.length = 0
+  // if (duckContainer.toString() === empty.toString()) {
+  //   score++
+  // }
 
   debug.log(score)
 });
 
+duck.onCollide("bread", () => {
+    duckContainer.push("bread")
+  debug.log(duckContainer)
+})
+
+duck.onCollide("cheese", () => {
+    duckContainer.push("cheese")
+  debug.log(duckContainer)
+})
+
+duck.onCollide("meat", () => {
+    duckContainer.push("meat")
+  debug.log(duckContainer)
+})
+
+duck.onCollide("lettuce", () => {
+    duckContainer.push("lettuce")
+  debug.log(duckContainer)
+})
+
+duck.onCollide("pepper", () => {
+    duckContainer.push("pepper")
+  debug.log(duckContainer)
+})
 // debug.log(duckContainer)
 
 //text example
@@ -141,10 +191,5 @@ const music = play("music", {
     loop: true
 })
 
-onKeyPress("space", () => music.paused = !music.paused)
-// const playMusic = () => {
-// 	music.play()
-// }
-
-// playMusic()
+onKeyPress("m", () => music.paused = !music.paused)
 
