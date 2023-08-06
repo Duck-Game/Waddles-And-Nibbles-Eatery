@@ -131,3 +131,20 @@ duck.onCollide("trash", () => {
 //   pos().moveTo(rat.pos),
 //   { value: 0 },
 // ])
+
+//play Music 
+
+loadSound("music", "sprites/music.mp3")
+
+const music = play("music", {
+    volume: 0.1,
+    loop: true
+})
+
+onKeyPress("space", () => music.paused = !music.paused)
+// const playMusic = () => {
+// 	music.play()
+// }
+
+// playMusic()
+
