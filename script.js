@@ -28,7 +28,7 @@ loadSprite('cheese-table', 'sprites/cheese-table.png')
 loadSprite('meat-table', 'sprites/meat-table.png')
 loadSprite('lettuce-table', 'sprites/lettuce-table.png')
 loadSprite('pepper-table', 'sprites/pepper-table.png')
-loadSprite('bread', 'sprites/bread.png')
+loadSprite('bun', 'sprites/bread.png')
 loadSprite('cheese', 'sprites/cheese.png')
 loadSprite('meat', 'sprites/meat.png')
 loadSprite('lettuce', 'sprites/lettuce.png')
@@ -44,8 +44,8 @@ loadSprite('left-duck', 'sprites/left-duck.png')
 //setting sprite variables
 
 // const rat = add([sprite('rat'), pos(80, 168), area(), body()]);
-const duck = add([sprite('front-duck'), pos(80, 168),scale(2.5) ,area(), body()]);
-const duck2 = add([sprite('front-duck'), pos(80, 168),scale(2.5) ,area(), body()]);
+const duck = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
+const duck2 = add([sprite('front-duck'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
 const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
 const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
 const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -60,7 +60,7 @@ const pepperTable = add([sprite('pepper-table'), pos(50, 410), scale(1.2), area(
 //movement duck1
 
 onKeyDown('right', () => {
-  
+
   // how to change sprite
   // rat.use(sprite('cheese'))
   duck.use(sprite('right-duck'))
@@ -85,7 +85,7 @@ onKeyDown('down', () => {
 // movement duck 2
 
 onKeyDown('d', () => {
-  
+
   // how to change sprite
   // rat.use(sprite('cheese'))
   duck2.use(sprite('right-duck'))
@@ -113,12 +113,12 @@ onKeyDown('s', () => {
 
 
 //random order function
-let foods = ['cheese', 'meat', 'lettuce', 'pepper']
+let foods = ['cheese', 'meat', 'lettuce', 'peppers']
 
 const randomArray = (length) => {
   let arr = ['bun'];
 
-  for (let i = 1; i < length; i++) {
+  for (let i = 1; i < length + 1; i++) {
     let randomNum = Math.floor(Math.random() * foods.length)
     arr.push(foods[randomNum])
   }
@@ -126,7 +126,20 @@ const randomArray = (length) => {
   return arr
 }
 
-const foodOrder = randomArray(4);
+const foodOrder = randomArray(3);
+
+//display food order function
+const displayOrder = () => {
+  let positionY = 250
+  for(let i = 0; i < foodOrder.length; i++) {
+    add([sprite(foodOrder[i]), pos(350, positionY), scale(1.8)]);
+    positionY += 70
+  }
+  
+}
+
+// add([sprite(foodOrder[0]), pos(400,250)])
+displayOrder()
 
 debug.log(foodOrder)
 
@@ -138,6 +151,7 @@ let score = 0;
 //score function whenever something collides
 duck.onCollide("trash", () => {
   duckContainer.length = 0
+  displayOrder()
   // if (duckContainer.toString() === empty.toString()) {
   //   score++
   // }
@@ -146,27 +160,27 @@ duck.onCollide("trash", () => {
 });
 
 duck.onCollide("bread", () => {
-    duckContainer.push("bread")
+  duckContainer.push("bread")
   debug.log(duckContainer)
 })
 
 duck.onCollide("cheese", () => {
-    duckContainer.push("cheese")
+  duckContainer.push("cheese")
   debug.log(duckContainer)
 })
 
 duck.onCollide("meat", () => {
-    duckContainer.push("meat")
+  duckContainer.push("meat")
   debug.log(duckContainer)
 })
 
 duck.onCollide("lettuce", () => {
-    duckContainer.push("lettuce")
+  duckContainer.push("lettuce")
   debug.log(duckContainer)
 })
 
 duck.onCollide("pepper", () => {
-    duckContainer.push("pepper")
+  duckContainer.push("pepper")
   debug.log(duckContainer)
 })
 // debug.log(duckContainer)
@@ -187,9 +201,14 @@ duck.onCollide("pepper", () => {
 loadSound("music", "sprites/music.mp3")
 
 const music = play("music", {
-    volume: 0.1,
-    loop: true
+  volume: 0.1,
+  loop: true
 })
 
 onKeyPress("m", () => music.paused = !music.paused)
 
+//hitting nibbles
+duck.onCollide('nibbles', () => {
+  shake(10)
+  addKaboom(duck2.pos)
+})
