@@ -28,18 +28,23 @@ loadSprite('cheese-table', 'sprites/cheese-table.png')
 loadSprite('meat-table', 'sprites/meat-table.png')
 loadSprite('lettuce-table', 'sprites/lettuce-table.png')
 loadSprite('pepper-table', 'sprites/pepper-table.png')
-loadSprite('bread', 'bread.png')
-loadSprite('cheese', 'cheese.png')
-loadSprite('meat', 'meat.png')
-loadSprite('lettuce', 'lettuce.png')
-loadSprite('peppers', 'peppers.png')
+loadSprite('bread', 'sprites/bread.png')
+loadSprite('cheese', 'sprites/cheese.png')
+loadSprite('meat', 'sprites/meat.png')
+loadSprite('lettuce', 'sprites/lettuce.png')
+loadSprite('peppers', 'sprites/peppers.png')
+loadSprite('front-duck', 'sprites/front-duck.png')
+loadSprite('back-duck', 'sprites/back-duck.png')
+loadSprite('right-duck', 'sprites/right-duck.png')
+loadSprite('left-duck', 'sprites/left-duck.png')
 
 
 // loadSprite('cheese', 'cheese.png')
 
 //setting sprite variables
 
-const rat = add([sprite('rat'), pos(80, 168), area(), body()]);
+// const rat = add([sprite('rat'), pos(80, 168), area(), body()]);
+const duck = add([sprite('front-duck'), pos(80, 168),scale(2.5) ,area(), body()]);
 const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
 const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
 const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -57,20 +62,23 @@ onKeyDown('right', () => {
   
   // how to change sprite
   // rat.use(sprite('cheese'))
-  
-  rat.move(230, 0)
+  duck.use(sprite('right-duck'))
+  duck.move(230, 0)
 });
 
 onKeyDown('left', () => {
-  rat.move(-230, 0)
+  duck.use(sprite('left-duck'))
+  duck.move(-230, 0)
 });
 
 onKeyDown('up', () => {
-  rat.move(0, -230)
+  duck.use(sprite('back-duck'))
+  duck.move(0, -230)
 });
 
 onKeyDown('down', () => {
-  rat.move(0, 230)
+  duck.use(sprite('front-duck'))
+  duck.move(0, 230)
 });
 
 
@@ -102,7 +110,7 @@ const duckContainer = []
 let score = 0;
 
 //score function whenever something collides
-rat.onCollide("trash", () => {
+duck.onCollide("trash", () => {
   duckContainer.push('cheese')
   if (duckContainer.toString() === empty.toString()) {
     score++
