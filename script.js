@@ -65,6 +65,7 @@ onKeyDown('right', () => {
   // rat.use(sprite('cheese'))
   duck.use(sprite('right-duck'))
   duck.move(230, 0)
+  
 });
 
 onKeyDown('left', () => {
@@ -207,8 +208,20 @@ const music = play("music", {
 
 onKeyPress("m", () => music.paused = !music.paused)
 
-//hitting nibbles
+// hitting nibbles
+
+loadSound("bonk", "sprites/bonk.mp3")
+
 duck.onCollide('nibbles', () => {
   shake(10)
   addKaboom(duck2.pos)
+  play("bonk")
+  duck2.move(100, 0)
+})
+
+duck2.onCollide('waddles', () => {
+  shake(10)
+  addKaboom(duck2.pos)
+  play("bonk")
+  
 })
