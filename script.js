@@ -127,19 +127,19 @@ const randomArray = (length) => {
   return arr
 }
 
-let foodOrder;
+// let foodOrder;
 
 //display food order function
-const displayOrder = () => {
-  foodOrder = randomArray(3);
-  let positionY = 150
-  for (let i = 0; i < foodOrder.length; i++) {
-    add([sprite(foodOrder[i]), pos(350, positionY), scale(1.8)]);
-    positionY += 70
-  }
-}
+// const displayOrder = () => {
+//   foodOrder = randomArray(3);
+//   let positionY = 150
+//   for (let i = 0; i < foodOrder.length; i++) {
+//     add([sprite(foodOrder[i]), pos(350, positionY), scale(1.8)]);
+//     positionY += 70
+//   }
+// }
 
-displayOrder()
+// displayOrder()
 
 let empty = ['cheese']
 const duckContainer = []
@@ -206,13 +206,21 @@ duck2.onCollide('waddles', () => {
 })
 
 let score1 = add([
-  text(`Score: ${score}`, {
+  text(`Score`, {
     font: 'arcade',
     size: 30
   }),
   pos(1200, 20),
   { value: 0 }
 ])
+
+let foodOrder = randomArray(3);
+
+let firstItem = add([sprite(foodOrder[0]), pos(350, 150), scale(1.8)]);
+let secondItem = add([sprite(foodOrder[1]), pos(350, 220), scale(1.8)]);
+let thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
+let fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
+let fifthItem = add([sprite(foodOrder[4]), pos(350, 410), scale(1.8)]);
 
 onUpdate(() => {
   let containerText = add([
@@ -231,6 +239,15 @@ onUpdate(() => {
     score1.value++
     score1.text = `Score: ${score1.value}`
     duckContainer.length = 0
+    containerText.text = ''
+    destroy(secondItem)
+    destroy(thirdItem)
+    destroy(fourthItem)
+    
+    foodOrder = randomArray(3)
+    secondItem = add([sprite(foodOrder[1]), pos(350, 220), scale(1.8)]);
+    thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
+    fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
   }
-  
+
 })
