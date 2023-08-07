@@ -4,6 +4,9 @@ kaboom();
 loadSprite("background", 'sprites/bg.png');
 loadSprite("home", 'sprites/home.png');
 
+//music
+loadSound("music", "sprites/music.mp3")
+
 //loading font
 loadFont('arcade', 'ARCADECLASSIC.TTF')
 
@@ -167,9 +170,8 @@ scene('player1', () => {
   })
 
   //play Music 
-  loadSound("music", "sprites/music.mp3")
-
   const music = play("music", {
+    paused: true,
     volume: 0.1,
     loop: true
   })
@@ -180,17 +182,9 @@ scene('player1', () => {
   loadSound("bonk", "sprites/bonk.mp3")
 
   duck.onCollide('nibbles', () => {
-    shake(10)
+    shake(3)
     addKaboom(duck2.pos)
     play("bonk")
-    duck2.move(100, 0)
-  })
-
-  duck2.onCollide('waddles', () => {
-    shake(10)
-    addKaboom(duck2.pos)
-    play("bonk")
-
   })
 
   //score text
@@ -267,13 +261,12 @@ scene('player1', () => {
       time = 30;
     }
 
-    if (time === 0) {
+    if (time < 1) {
       go('gameOver')
+      music.paused = true
     }
   })
 })
-go('player1')
-
 
 //homescreen
 scene("home", () => {
@@ -334,6 +327,7 @@ scene("gameOver", () => {
   add([
     text('game over'),
     anchor("center"),
+    pos(width() / 2, height() / 2),
     color(0, 0, 0),
   ])
 })
