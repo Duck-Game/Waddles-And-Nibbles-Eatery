@@ -110,37 +110,52 @@ const randomArray = (length) => {
 }
 
 const duckContainer = []
+const duckSprites = []
+let duckContainerPos = 150
+
+const resetDuckSprites = () => {
+  for (let i = 0; i < duckSprites.length; i++) {
+    destroy(duckSprites[i])
+  }
+  duckContainerPos = 150
+}
 
 //deleting items from array
 duck.onCollide("trash", () => {
   duckContainer.length = 0
+  resetDuckSprites()
   shake(2.6)
 });
 
 //collecting items and storing in array
 duck.onCollide("bun", () => {
   duckContainer.push("bun")
-  debug.log(duckContainer)
+  duckSprites.push(add([sprite('bun'), pos(1150, duckContainerPos), scale(1.5)]))
+  duckContainerPos += 70
 })
 
 duck.onCollide("cheese", () => {
   duckContainer.push("cheese")
-  debug.log(duckContainer)
+  duckSprites.push(add([sprite('cheese'), pos(1150, duckContainerPos), scale(1.5)]))
+  duckContainerPos += 70
 })
 
 duck.onCollide("meat", () => {
   duckContainer.push("meat")
-  debug.log(duckContainer)
+  duckSprites.push(add([sprite('meat'), pos(1150, duckContainerPos), scale(1.5)]))
+  duckContainerPos += 70
 })
 
 duck.onCollide("lettuce", () => {
   duckContainer.push("lettuce")
-  debug.log(duckContainer)
+  duckSprites.push(add([sprite('lettuce'), pos(1150, duckContainerPos), scale(1.5)]))
+  duckContainerPos += 70
 })
 
 duck.onCollide("peppers", () => {
   duckContainer.push("peppers")
-  debug.log(duckContainer)
+  duckSprites.push(add([sprite('peppers'), pos(1150, duckContainerPos), scale(1.5)]))
+  duckContainerPos += 70
 })
 
 //play Music 
@@ -182,36 +197,28 @@ let score1 = add([
 
 //creating food array order
 let foodOrder = randomArray(3);
-
-let firstItem = add([sprite(foodOrder[0]), pos(350, 150), scale(1.8)]);
-let secondItem = add([sprite(foodOrder[1]), pos(350, 220), scale(1.8)]);
-let thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
-let fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
-let fifthItem = add([sprite(foodOrder[4]), pos(350, 410), scale(1.8)]);
-
+let spriteArr = []
+let orderPosition = 150
+for (let i = 0; i < foodOrder.length; i++) {
+  spriteArr.push(add([sprite(foodOrder[i]), pos(350, orderPosition), scale(1.8)]))
+  orderPosition += 70
+}
 //function to destroy then recreate order
 const orderUpdate = () => {
-  destroy(secondItem)
-  destroy(thirdItem)
-  destroy(fourthItem)
+  destroy(spriteArr[1])
+  destroy(spriteArr[2])
+  destroy(spriteArr[3])
 
   foodOrder = randomArray(3)
-  secondItem = add([sprite(foodOrder[1]), pos(350, 220), scale(1.8)]);
-  thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
-  fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
+  orderPosition = 220
+  for (let i = 1; i < foodOrder.length - 1; i++) {
+    spriteArr[i] = (add([sprite(foodOrder[i]), pos(350, orderPosition), scale(1.8)]))
+    orderPosition += 70
+  }
 }
 
 //constantly check for these conditions
 onUpdate(() => {
-  // let containerText = add([
-  //   text(`${duckContainer}`, {
-  //     font: 'arcade',
-  //     size: 30
-  //   }),
-  //   pos(1200, 400),
-  //   { value: 0 }
-  // ])
-
   if (duckContainer.toString() === foodOrder.toString()) {
     score1.value++
     score1.text = `Score: ${score1.value}`
@@ -219,5 +226,10 @@ onUpdate(() => {
 
     //reset order
     orderUpdate()
+
+    //reset duck container
+    resetDuckSprites()
+    
+    shake(2)
   }
 })
