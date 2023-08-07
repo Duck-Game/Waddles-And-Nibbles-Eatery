@@ -38,12 +38,7 @@ loadSprite('back-duck', 'sprites/back-duck.png')
 loadSprite('right-duck', 'sprites/right-duck.png')
 loadSprite('left-duck', 'sprites/left-duck.png')
 
-
-// loadSprite('cheese', 'cheese.png')
-
 //setting sprite variables
-
-// const rat = add([sprite('rat'), pos(80, 168), area(), body()]);
 const duck = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
 const duck2 = add([sprite('front-duck'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
 const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
@@ -56,62 +51,49 @@ const meatTable = add([sprite('meat-table'), pos(700, 500), scale(1.2), area(), 
 const lettuceTable = add([sprite('lettuce-table'), pos(900, 500), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
 const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'peppers']);
 
-
-//movement duck1
-
+//movement
+const SPEED = 260
 onKeyDown('right', () => {
-
-  // how to change sprite
-  // rat.use(sprite('cheese'))
   duck.use(sprite('right-duck'))
-  duck.move(230, 0)
-
+  duck.move(SPEED, 0)
 });
 
 onKeyDown('left', () => {
   duck.use(sprite('left-duck'))
-  duck.move(-230, 0)
+  duck.move(-SPEED, 0)
 });
 
 onKeyDown('up', () => {
   duck.use(sprite('back-duck'))
-  duck.move(0, -230)
+  duck.move(0, -SPEED)
 });
 
 onKeyDown('down', () => {
   duck.use(sprite('front-duck'))
-  duck.move(0, 230)
+  duck.move(0, SPEED)
 });
 
 // movement duck 2
 
 onKeyDown('d', () => {
-
-  // how to change sprite
-  // rat.use(sprite('cheese'))
   duck2.use(sprite('right-duck'))
-  duck2.move(230, 0)
+  duck2.move(SPEED, 0)
 });
 
 onKeyDown('a', () => {
   duck2.use(sprite('left-duck'))
-  duck2.move(-230, 0)
+  duck2.move(-SPEED, 0)
 });
 
 onKeyDown('w', () => {
   duck2.use(sprite('back-duck'))
-  duck2.move(0, -230)
+  duck2.move(0, -SPEED)
 });
 
 onKeyDown('s', () => {
   duck2.use(sprite('front-duck'))
-  duck2.move(0, 230)
+  duck2.move(0, SPEED)
 });
-
-
-
-// const cheese = add([sprite('cheese'), pos(300, 40), area(), body({ isStatic: true }), 'cheese']);
-
 
 //random order function
 let foods = ['cheese', 'meat', 'lettuce', 'peppers']
@@ -127,30 +109,15 @@ const randomArray = (length) => {
   return arr
 }
 
-// let foodOrder;
-
-//display food order function
-// const displayOrder = () => {
-//   foodOrder = randomArray(3);
-//   let positionY = 150
-//   for (let i = 0; i < foodOrder.length; i++) {
-//     add([sprite(foodOrder[i]), pos(350, positionY), scale(1.8)]);
-//     positionY += 70
-//   }
-// }
-
-// displayOrder()
-
-let empty = ['cheese']
 const duckContainer = []
-let score = 0;
 
-//score function whenever something collides
+//deleting items from array
 duck.onCollide("trash", () => {
   duckContainer.length = 0
-  debug.log(score)
+  shake(2.6)
 });
 
+//collecting items and storing in array
 duck.onCollide("bun", () => {
   duckContainer.push("bun")
   debug.log(duckContainer)
@@ -177,7 +144,6 @@ duck.onCollide("peppers", () => {
 })
 
 //play Music 
-
 loadSound("music", "sprites/music.mp3")
 
 const music = play("music", {
@@ -188,7 +154,6 @@ const music = play("music", {
 onKeyPress("m", () => music.paused = !music.paused)
 
 // hitting nibbles
-
 loadSound("bonk", "sprites/bonk.mp3")
 
 duck.onCollide('nibbles', () => {
@@ -205,8 +170,9 @@ duck2.onCollide('waddles', () => {
 
 })
 
+//score text
 let score1 = add([
-  text(`Score`, {
+  text(`Score: 0`, {
     font: 'arcade',
     size: 30
   }),
@@ -214,6 +180,7 @@ let score1 = add([
   { value: 0 }
 ])
 
+//creating food array order
 let foodOrder = randomArray(3);
 
 let firstItem = add([sprite(foodOrder[0]), pos(350, 150), scale(1.8)]);
@@ -222,32 +189,35 @@ let thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
 let fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
 let fifthItem = add([sprite(foodOrder[4]), pos(350, 410), scale(1.8)]);
 
+//function to destroy then recreate order
+const orderUpdate = () => {
+  destroy(secondItem)
+  destroy(thirdItem)
+  destroy(fourthItem)
+
+  foodOrder = randomArray(3)
+  secondItem = add([sprite(foodOrder[1]), pos(350, 220), scale(1.8)]);
+  thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
+  fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
+}
+
+//constantly check for these conditions
 onUpdate(() => {
-  let containerText = add([
-    text(`${duckContainer}`, {
-      font: 'arcade',
-      size: 30
-    }),
-    pos(1200, 400),
-    { value: 0 }
-  ])
-  duck.onCollide("trash", () => {
-    containerText.text = ''
-  });
+  // let containerText = add([
+  //   text(`${duckContainer}`, {
+  //     font: 'arcade',
+  //     size: 30
+  //   }),
+  //   pos(1200, 400),
+  //   { value: 0 }
+  // ])
 
   if (duckContainer.toString() === foodOrder.toString()) {
     score1.value++
     score1.text = `Score: ${score1.value}`
     duckContainer.length = 0
-    containerText.text = ''
-    destroy(secondItem)
-    destroy(thirdItem)
-    destroy(fourthItem)
-    
-    foodOrder = randomArray(3)
-    secondItem = add([sprite(foodOrder[1]), pos(350, 220), scale(1.8)]);
-    thirdItem = add([sprite(foodOrder[2]), pos(350, 290), scale(1.8)]);
-    fourthItem = add([sprite(foodOrder[3]), pos(350, 360), scale(1.8)]);
-  }
 
+    //reset order
+    orderUpdate()
+  }
 })
