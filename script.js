@@ -6,6 +6,9 @@ loadSprite("home", 'sprites/home.png');
 
 //music
 loadSound("music", "sprites/music.mp3")
+loadSound("bonk", "sprites/bonk.mp3")
+loadSound("nibbles-quack", "sprites/nibbles-quack.mp3")
+loadSound("waddles-quack", "sprites/waddles-quack.mp3")
 
 //loading font
 loadFont('arcade', 'ARCADECLASSIC.TTF')
@@ -179,7 +182,6 @@ scene('player1', () => {
   onKeyPress("m", () => music.paused = !music.paused)
 
   // hitting nibbles
-  loadSound("bonk", "sprites/bonk.mp3")
 
   waddles.onCollide('nibbles', () => {
     shake(3)
@@ -196,7 +198,11 @@ scene('player1', () => {
     pos(1200, 20),
     { value: 0 }
   ])
+  // quacking 
 
+  onKeyPress("q", () => play("nibbles-quack"))
+  onKeyPress("z", () => play("waddles-quack"))
+  
   //creating food array order
   let foodOrder = randomArray(3);
   let spriteArr = []
@@ -484,6 +490,11 @@ scene('player2', () => {
     pos(1200, 20),
     { value: 0 }
   ])
+  
+    // quacking 
+
+  onKeyPress("q", () => play("nibbles-quack"))
+  onKeyPress("z", () => play("waddles-quack"))
   
   //score text for nibbles
   let nibblesScore = add([
