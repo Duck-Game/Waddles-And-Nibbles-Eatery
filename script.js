@@ -58,7 +58,7 @@ scene('player1', () => {
   const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'peppers']);
 
   //movement
-  const SPEED = 260
+  const SPEED = 330
   onKeyDown('right', () => {
     duck.use(sprite('right-duck'))
     duck.move(SPEED, 0)
@@ -131,6 +131,7 @@ scene('player1', () => {
     duckContainer.length = 0
     resetDuckSprites()
     shake(2.6)
+    time -= 10
   });
 
   //collecting items and storing in array
@@ -223,6 +224,28 @@ scene('player1', () => {
     }
   }
 
+
+  //timer function
+  let time = 30;
+
+  let timer = add([
+    text(`0:${time}`, {
+      font: 'arcade',
+      size: 30
+    }),
+    pos(700, 20),
+  ])
+
+  const lowerTimer = () => {
+    time >= 10 ? timer.text = `0:${time}` : timer.text = `0:0${time}`
+    if (time !== 0) {
+      time--
+    }
+  }
+
+  setInterval(lowerTimer, 1000);
+
+
   //constantly check for these conditions
   onUpdate(() => {
     if (duckContainer.toString() === foodOrder.toString()) {
@@ -235,9 +258,17 @@ scene('player1', () => {
 
       //reset duck container
       resetDuckSprites()
-
+      
+      //shake on complete order
       shake(2)
+      
+      //reset timer
+      time = 30;
     }
+
+    // if (time === 0) {
+    //   debug.log('lol')
+    // }
   })
 })
 go('player1')
