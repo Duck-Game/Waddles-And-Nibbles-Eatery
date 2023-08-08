@@ -14,7 +14,6 @@ loadSound("waddles-quack", "sprites/waddles-quack.mp3")
 loadFont('arcade', 'ARCADECLASSIC.TTF')
 
 //loading sprites
-loadSprite('rat', 'rat.png');
 loadSprite('left-counter', 'sprites/left-counter.png')
 loadSprite('right-counter', 'sprites/right-counter.png')
 loadSprite('trashcan', 'sprites/trashcan.png')
@@ -32,6 +31,10 @@ loadSprite('front-duck', 'sprites/front-duck.png')
 loadSprite('back-duck', 'sprites/back-duck.png')
 loadSprite('right-duck', 'sprites/right-duck.png')
 loadSprite('left-duck', 'sprites/left-duck.png')
+loadSprite('nibbles-front', 'sprites/nibbles-front.png')
+loadSprite('nibbles-right', 'sprites/nibbles-right.png')
+loadSprite('nibbles-back', 'sprites/nibbles-back.png')
+loadSprite('nibbles-left', 'sprites/nibbles-left.png')
 
 //setting game player 1
 
@@ -53,7 +56,7 @@ scene('player1', () => {
 
   //setting sprite variables
   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('front-duck'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
+  const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
   const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
   const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
   const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -89,22 +92,22 @@ scene('player1', () => {
   // movement duck 2
 
   onKeyDown('d', () => {
-    nibbles.use(sprite('right-duck'))
+    nibbles.use(sprite('nibbles-right'))
     nibbles.move(SPEED, 0)
   });
 
   onKeyDown('a', () => {
-    nibbles.use(sprite('left-duck'))
+    nibbles.use(sprite('nibbles-left'))
     nibbles.move(-SPEED, 0)
   });
 
   onKeyDown('w', () => {
-    nibbles.use(sprite('back-duck'))
+    nibbles.use(sprite('nibbles-back'))
     nibbles.move(0, -SPEED)
   });
 
   onKeyDown('s', () => {
-    nibbles.use(sprite('front-duck'))
+    nibbles.use(sprite('nibbles-front'))
     nibbles.move(0, SPEED)
   });
 
@@ -202,7 +205,7 @@ scene('player1', () => {
 
   onKeyPress("q", () => play("nibbles-quack"))
   onKeyPress("z", () => play("waddles-quack"))
-  
+
   //creating food array order
   let foodOrder = randomArray(3);
   let spriteArr = []
@@ -225,7 +228,6 @@ scene('player1', () => {
     }
   }
 
-
   //timer function
   let time = 30;
 
@@ -246,6 +248,33 @@ scene('player1', () => {
 
   setInterval(lowerTimer, 1000);
 
+  //set waddles name tag
+  const waddlesName = () => {
+    const nameTag = add([
+      text('Waddles', {
+        font: 'arcade',
+        size: 17
+      }),
+      pos(waddles.pos.x, waddles.pos.y - 15),
+    ])
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 0.5);
+  }
+
+  //set nibbles name tag
+  const nibblesName = () => {
+    const nameTag = add([
+      text('Nibbles', {
+        font: 'arcade',
+        size: 17
+      }),
+      pos(nibbles.pos.x, nibbles.pos.y - 15),
+    ])
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 0.5);
+  }
 
   //constantly check for these conditions
   onUpdate(() => {
@@ -271,12 +300,15 @@ scene('player1', () => {
       go('gameOver')
       music.paused = true
     }
+
+    //constantly setting name
+    waddlesName()
+    nibblesName()
   })
 })
 
 //2 player game
 scene('player2', () => {
-
 
   //setting background
   add([
@@ -294,7 +326,7 @@ scene('player2', () => {
 
   //setting sprite variables
   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('front-duck'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
+  const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
   const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
   const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
   const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -330,22 +362,22 @@ scene('player2', () => {
   // movement duck 2
 
   onKeyDown('d', () => {
-    nibbles.use(sprite('right-duck'))
+    nibbles.use(sprite('nibbles-right'))
     nibbles.move(SPEED, 0)
   });
 
   onKeyDown('a', () => {
-    nibbles.use(sprite('left-duck'))
+    nibbles.use(sprite('nibbles-left'))
     nibbles.move(-SPEED, 0)
   });
 
   onKeyDown('w', () => {
-    nibbles.use(sprite('back-duck'))
+    nibbles.use(sprite('nibbles-back'))
     nibbles.move(0, -SPEED)
   });
 
   onKeyDown('s', () => {
-    nibbles.use(sprite('front-duck'))
+    nibbles.use(sprite('nibbles-front'))
     nibbles.move(0, SPEED)
   });
 
@@ -362,7 +394,7 @@ scene('player2', () => {
     arr.push('bun')
     return arr
   }
-  
+
   //array for waddles
   const waddlesContainer = []
   const waddlesSprites = []
@@ -412,7 +444,7 @@ scene('player2', () => {
     waddlesSprites.push(add([sprite('peppers'), pos(1150, waddlesContainerPos), scale(1.5)]))
     waddlesContainerPos += 70
   })
-  
+
   //array for nibbles
   const nibblesContainer = []
   const nibblesSprites = []
@@ -422,11 +454,11 @@ scene('player2', () => {
     for (let i = 0; i < nibblesSprites.length; i++) {
       destroy(nibblesSprites[i])
     }
-   nibblesContainerPos = 150
+    nibblesContainerPos = 150
   }
 
   //deleting items from array
- nibbles.onCollide("trash", () => {
+  nibbles.onCollide("trash", () => {
     nibblesContainer.length = 0
     resetNibblesSprites()
     shake(2.6)
@@ -490,12 +522,12 @@ scene('player2', () => {
     pos(1200, 20),
     { value: 0 }
   ])
-  
-    // quacking 
+
+  // quacking 
 
   onKeyPress("q", () => play("nibbles-quack"))
   onKeyPress("z", () => play("waddles-quack"))
-  
+
   //score text for nibbles
   let nibblesScore = add([
     text(`Score: 0`, {
@@ -527,7 +559,35 @@ scene('player2', () => {
       orderPosition += 70
     }
   }
-  
+
+  //set waddles name tag
+  const waddlesName = () => {
+    const nameTag = add([
+      text('Waddles', {
+        font: 'arcade',
+        size: 17
+      }),
+      pos(waddles.pos.x, waddles.pos.y - 15),
+    ])
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 0.5);
+  }
+
+  //set nibbles name tag
+  const nibblesName = () => {
+    const nameTag = add([
+      text('Nibbles', {
+        font: 'arcade',
+        size: 17
+      }),
+      pos(nibbles.pos.x, nibbles.pos.y - 15),
+    ])
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 0.5);
+  }
+
   //constantly check for these conditions
   onUpdate(() => {
     if (waddlesContainer.toString() === foodOrder.toString()) {
@@ -545,7 +605,8 @@ scene('player2', () => {
 
       //shake on complete order
       shake(2)
-    } else if (nibblesContainer.toString() === foodOrder.toString()) {
+    }
+    else if (nibblesContainer.toString() === foodOrder.toString()) {
       nibblesScore.value++
       nibblesScore.text = `Score: ${nibblesScore.value}`
       waddlesContainer.length = 0
@@ -561,6 +622,9 @@ scene('player2', () => {
       //shake on complete order
       shake(2)
     }
+
+    waddlesName()
+    nibblesName()
   })
 })
 
