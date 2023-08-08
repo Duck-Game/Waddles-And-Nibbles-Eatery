@@ -681,20 +681,45 @@ scene("home", () => {
   ])
 
   //load Sprite
-  const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
+   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles', {
+    speed: choose([230, 300]),
+    dir: choose([-1, 1]),
+  }]);
+  const nibbles = add([sprite('nibbles-front'), pos(800, 70), scale(2.5), area(), body(), 'nibbles', {
+    speed: choose([180, 90]),
+    dir: choose([-2, 2]),
+  }]);
 
-  //nibbles motion 
+//nibbles motion 
   const nibblesAi = () => {
-    let xCoordinate = Math.floor(Math.random() * width())
-    let yCoordinate = Math.floor(Math.random() * height())
-    let dir = (xCoordinate, yCoordinate)
-    nibbles.move(dir)
+    const left = nibbles.move(nibbles.dir * nibbles.speed, 0)
+    if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 60) {
+      nibbles.dir = -nibbles.dir
+    }
+
+    const right = nibbles.move(0, nibbles.dir * nibbles.speed)
+    if (nibbles.pos.y < 0 || nibbles.pos.y > height() - 80) {
+      nibbles.dir = -nibbles.dir;
+    }
   }
 
-  nibblesAi()
+//waddles motion
+  const waddlesAi = () => {
+    waddles.move(waddles.dir * waddles.speed, 0)
+    if (waddles.pos.x < 0 || waddles.pos.x > width() - 60) {
+      waddles.dir = -waddles.dir;
+    }
 
-  // setInterval( nibblesAi , 100);
+    waddles.move(0, waddles.dir * waddles.speed)
+    if (waddles.pos.y < 0 || waddles.pos.y > height() - 80) {
+      waddles.dir = -waddles.dir
+    }
+  }
+
+ onUpdate(() => {
+    nibblesAi()
+    waddlesAi()
+  })
 
   const music = play("home-music", {
     paused: true,
