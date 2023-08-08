@@ -37,8 +37,19 @@ loadSprite('nibbles-right', 'sprites/nibbles-right.png')
 loadSprite('nibbles-back', 'sprites/nibbles-back.png')
 loadSprite('nibbles-left', 'sprites/nibbles-left.png')
 
-//setting game player 1
 
+
+
+
+
+
+
+
+
+
+
+
+//setting game player 1
 scene('player1', () => {
 
   //setting background
@@ -307,6 +318,21 @@ scene('player1', () => {
     nibblesName()
   })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //2 player game
 scene('player2', () => {
@@ -629,19 +655,35 @@ scene('player2', () => {
   })
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //homescreen
 scene("home", () => {
-  
-  
+
+
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
-  
-    //load Sprite
+
+  //load Sprite
   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
   const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
-  
+
   //nibbles motion 
   const nibblesAi = () => {
     let xCoordinate = Math.floor(Math.random() * width())
@@ -649,11 +691,11 @@ scene("home", () => {
     let dir = (xCoordinate, yCoordinate)
     nibbles.move(dir)
   }
-  
+
   nibblesAi()
-  
+
   // setInterval( nibblesAi , 100);
-  
+
   const music = play("home-music", {
     paused: true,
     volume: 0.1,
@@ -665,7 +707,7 @@ scene("home", () => {
   function addButton(txt, p, f) {
 
     // add a parent background object
-    
+
     const btn = add([
       rect(240, 80, { radius: 8 }),
       pos(p),
@@ -673,7 +715,7 @@ scene("home", () => {
       scale(1),
       anchor("center"),
       outline(2)
-  
+
     ])
 
     // add a child object that displays the text
@@ -708,20 +750,32 @@ scene("home", () => {
     return btn
 
   }
-
-
   addButton("1 Player", vec2(width() / 2, (height() / 2) - 75), () => go("player1"))
   addButton("2 Players", vec2(width() / 2, (height() / 2) + 75), () => go("player2"))
 })
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//game over scene
 scene("gameOver", () => {
-  
+
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
-  
+
   add([
     text('game over', {
       font: 'arcade',
@@ -732,4 +786,9 @@ scene("gameOver", () => {
   ])
 })
 
+
+
+
+
+//starting game
 go('home')
