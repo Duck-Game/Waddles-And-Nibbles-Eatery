@@ -36,8 +36,9 @@ loadSprite('nibbles-front', 'sprites/nibbles-front.png')
 loadSprite('nibbles-right', 'sprites/nibbles-right.png')
 loadSprite('nibbles-back', 'sprites/nibbles-back.png')
 loadSprite('nibbles-left', 'sprites/nibbles-left.png')
-
-
+loadSprite('burger', 'sprites/burger.png')
+loadSprite('taco', 'sprites/taco.png')
+loadSprite('egg', 'sprites/egg.png')
 
 
 
@@ -680,8 +681,16 @@ scene("home", () => {
     scale(1),
   ])
 
+  add([
+    text("Waddels  and  Nibbles  Eatery", {
+      font: 'arcade',
+    }),
+    scale(1),
+    pos(width() / 3, 15)
+  ])
+
   //load Sprite
-   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles', {
+  const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles', {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
@@ -690,7 +699,12 @@ scene("home", () => {
     dir: choose([-2, 2]),
   }]);
 
-//nibbles motion 
+  const burger = add([sprite('burger'), pos(90, 70), scale(2.5), area(), body(), 'burger', {
+    speed: choose([100, 50]),
+    dir: choose([-3, 3]),
+  }]);
+
+  //nibbles motion 
   const nibblesAi = () => {
     const left = nibbles.move(nibbles.dir * nibbles.speed, 0)
     if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 60) {
@@ -703,7 +717,7 @@ scene("home", () => {
     }
   }
 
-//waddles motion
+  //waddles motion
   const waddlesAi = () => {
     waddles.move(waddles.dir * waddles.speed, 0)
     if (waddles.pos.x < 0 || waddles.pos.x > width() - 60) {
@@ -716,9 +730,24 @@ scene("home", () => {
     }
   }
 
- onUpdate(() => {
+  // burger motion 
+  const burgerAi = () => {
+    burger.move(burger.dir * burger.speed, 0)
+    if (burger.pos.x < 0 || burger.pos.x > width() - 60) {
+      burger.dir = -urgerb.dir
+    }
+
+    const right = burger.move(0, burger.dir * burger.speed)
+    if (burger.pos.y < 0 || burger.pos.y > height() - 80) {
+      burger.dir = -burger.dir;
+    }
+  }
+
+
+  onUpdate(() => {
     nibblesAi()
     waddlesAi()
+    burgerAi()
   })
 
   const music = play("home-music", {
