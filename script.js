@@ -2,13 +2,14 @@ kaboom();
 
 //Background image
 loadSprite("background", 'sprites/bg.png');
-loadSprite("home", 'sprites/home.png');
+loadSprite("homebg", 'sprites/background-home.png');
 
 //music
 loadSound("music", "sprites/music.mp3")
 loadSound("bonk", "sprites/bonk.mp3")
 loadSound("nibbles-quack", "sprites/nibbles-quack.mp3")
 loadSound("waddles-quack", "sprites/waddles-quack.mp3")
+loadSound("home-music", "sprites/home-music.mp3")
 
 //loading font
 loadFont('arcade', 'ARCADECLASSIC.TTF')
@@ -630,26 +631,56 @@ scene('player2', () => {
 
 //homescreen
 scene("home", () => {
+  
+  
   add([
-    sprite('home', { width: width(), height: height() }),
+    sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
+  
+    //load Sprite
+  const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
+  const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
+  
+  //nibbles motion 
+  const nibblesAi = () => {
+    let xCoordinate = Math.floor(Math.random() * width())
+    let yCoordinate = Math.floor(Math.random() * height())
+    let dir = (xCoordinate, yCoordinate)
+    nibbles.move(dir)
+  }
+  
+  nibblesAi()
+  
+  // setInterval( nibblesAi , 100);
+  
+  const music = play("home-music", {
+    paused: true,
+    volume: 0.1,
+    loop: true
+  })
+
+  onKeyPress("m", () => music.paused = !music.paused)
 
   function addButton(txt, p, f) {
 
     // add a parent background object
+    
     const btn = add([
       rect(240, 80, { radius: 8 }),
       pos(p),
       area(),
       scale(1),
       anchor("center"),
-      outline(4)
+      outline(2)
+  
     ])
 
     // add a child object that displays the text
     btn.add([
-      text(txt),
+      text(txt, {
+        font: 'arcade',
+      }),
       anchor("center"),
       color(0, 0, 0),
     ])
@@ -658,7 +689,6 @@ scene("home", () => {
     // it runs every frame when the object is being hovered
     btn.onHoverUpdate(() => {
       const t = time() * 10
-      btn.color = hsl2rgb((t / 10) % 1, 0.6, 0.7)
       btn.scale = vec2(1.2)
       setCursor("pointer")
     })
@@ -673,10 +703,12 @@ scene("home", () => {
     // onClick() comes from area() component
     // it runs once when the object is clicked
     btn.onClick(f)
+    btn.onClick(() => music.paused = true)
 
     return btn
 
   }
+
 
   addButton("1 Player", vec2(width() / 2, (height() / 2) - 75), () => go("player1"))
   addButton("2 Players", vec2(width() / 2, (height() / 2) + 75), () => go("player2"))
@@ -684,8 +716,16 @@ scene("home", () => {
 
 
 scene("gameOver", () => {
+  
   add([
-    text('game over'),
+    sprite('homebg', { width: width(), height: height() }),
+    scale(1),
+  ])
+  
+  add([
+    text('game over', {
+      font: 'arcade',
+    }),
     anchor("center"),
     pos(width() / 2, height() / 2),
     color(0, 0, 0),
