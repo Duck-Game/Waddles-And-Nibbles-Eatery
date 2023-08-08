@@ -224,7 +224,7 @@ scene('player1', () => {
   let spriteArr = []
   let orderPosition = 150
   for (let i = 0; i < foodOrder.length; i++) {
-    spriteArr.push(add([sprite(foodOrder[i]), pos(350, orderPosition), scale(1.8)]))
+    spriteArr.push(add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
     orderPosition += 70
   }
   //function to destroy then recreate order
@@ -236,7 +236,7 @@ scene('player1', () => {
     foodOrder = randomArray(3)
     orderPosition = 220
     for (let i = 1; i < foodOrder.length - 1; i++) {
-      spriteArr[i] = (add([sprite(foodOrder[i]), pos(350, orderPosition), scale(1.8)]))
+      spriteArr[i] = (add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
       orderPosition += 70
     }
   }
@@ -571,7 +571,7 @@ scene('player2', () => {
   let spriteArr = []
   let orderPosition = 150
   for (let i = 0; i < foodOrder.length; i++) {
-    spriteArr.push(add([sprite(foodOrder[i]), pos(350, orderPosition), scale(1.8)]))
+    spriteArr.push(add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
     orderPosition += 70
   }
   //function to destroy then recreate order
@@ -583,7 +583,7 @@ scene('player2', () => {
     foodOrder = randomArray(3)
     orderPosition = 220
     for (let i = 1; i < foodOrder.length - 1; i++) {
-      spriteArr[i] = (add([sprite(foodOrder[i]), pos(350, orderPosition), scale(1.8)]))
+      spriteArr[i] = (add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
       orderPosition += 70
     }
   }
@@ -842,7 +842,13 @@ scene("gameOver", () => {
   onKeyPress("space", () => go("home"));
 })
 
+scene("waddles-win", () => {
+  
+})
 
+scene("nibbles-win", () => {
+  
+})
 
 
 
