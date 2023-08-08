@@ -288,6 +288,22 @@ scene('player1', () => {
       destroy(nameTag)
     }, 0.5);
   }
+  //adding obstacles
+  const addObstacle = () => {
+    let randomY = rand(250, height() - 20)
+    let enemy = add([sprite('burger'), pos(width() - 200, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
+      offscreen({ destroy: true })
+    ])
+
+    onUpdate(() => {
+      enemy.onCollide('waddles', () => {
+        shake(2.5)
+        waddles.pos.x = rand(200, width() - 50);
+        waddles.pos.y = rand(250, height() - 20);
+      })
+    })
+  }
+  loop(rand(2, 4), addObstacle)
 
   //constantly check for these conditions
   onUpdate(() => {
@@ -312,6 +328,7 @@ scene('player1', () => {
     if (time < 1) {
       go('gameOver')
       music.paused = true
+      player1Scene = false
     }
 
     //constantly setting name
@@ -616,6 +633,30 @@ scene('player2', () => {
     }, 0.5);
   }
 
+  //creating obstacles
+  const addObstacle = () => {
+    let randomY = rand(250, height() - 20)
+    let enemy = add([sprite('burger'), pos(width() - 200, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
+      offscreen({ destroy: true })
+    ])
+
+    onUpdate(() => {
+      enemy.onCollide('waddles', () => {
+        shake(2.5)
+        waddles.pos.x = rand(200, width() - 50);
+        waddles.pos.y = rand(250, height() - 20);
+      })
+
+      enemy.onCollide('nibbles', () => {
+        shake(2.5)
+        nibbles.pos.x = rand(200, width() - 50);
+        nibbles.pos.y = rand(250, height() - 20);
+      })
+    })
+  }
+
+  loop(rand(2, 4), addObstacle)
+
   //constantly check for these conditions
   onUpdate(() => {
     if (waddlesContainer.toString() === foodOrder.toString()) {
@@ -682,7 +723,7 @@ scene("home", () => {
   ])
 
   add([
-    text("Waddels  and  Nibbles  Eatery", {
+    text("Waddles  and  Nibbles  Eatery", {
       font: 'arcade',
     }),
     scale(1),
@@ -707,12 +748,12 @@ scene("home", () => {
   //nibbles motion 
   const nibblesAi = () => {
     const left = nibbles.move(nibbles.dir * nibbles.speed, 0)
-    if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 60) {
+    if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 90) {
       nibbles.dir = -nibbles.dir
     }
 
     const right = nibbles.move(0, nibbles.dir * nibbles.speed)
-    if (nibbles.pos.y < 0 || nibbles.pos.y > height() - 80) {
+    if (nibbles.pos.y < 0 || nibbles.pos.y > height() - 120) {
       nibbles.dir = -nibbles.dir;
     }
   }
@@ -720,12 +761,12 @@ scene("home", () => {
   //waddles motion
   const waddlesAi = () => {
     waddles.move(waddles.dir * waddles.speed, 0)
-    if (waddles.pos.x < 0 || waddles.pos.x > width() - 60) {
+    if (waddles.pos.x < 0 || waddles.pos.x > width() - 90) {
       waddles.dir = -waddles.dir;
     }
 
     waddles.move(0, waddles.dir * waddles.speed)
-    if (waddles.pos.y < 0 || waddles.pos.y > height() - 80) {
+    if (waddles.pos.y < 0 || waddles.pos.y > height() - 120) {
       waddles.dir = -waddles.dir
     }
   }
@@ -733,12 +774,12 @@ scene("home", () => {
   // burger motion 
   const burgerAi = () => {
     burger.move(burger.dir * burger.speed, 0)
-    if (burger.pos.x < 0 || burger.pos.x > width() - 60) {
-      burger.dir = -urgerb.dir
+    if (burger.pos.x < 0 || burger.pos.x > width() - 90) {
+      burger.dir = -burger.dir
     }
 
     const right = burger.move(0, burger.dir * burger.speed)
-    if (burger.pos.y < 0 || burger.pos.y > height() - 80) {
+    if (burger.pos.y < 0 || burger.pos.y > height() - 120) {
       burger.dir = -burger.dir;
     }
   }
@@ -843,11 +884,11 @@ scene("gameOver", () => {
 })
 
 scene("waddles-win", () => {
-  
+
 })
 
 scene("nibbles-win", () => {
-  
+
 })
 
 
