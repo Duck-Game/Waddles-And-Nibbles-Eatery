@@ -177,7 +177,7 @@ scene('player1', () => {
     waddlesContainer.length = 0
     resetWaddlesSprites()
     shake(2.6)
-    time -= 10
+    time -= 5
   });
 
   //collecting items and storing in array
@@ -240,7 +240,36 @@ scene('player1', () => {
   // quacking 
 
   onKeyPress("q", () => play("nibbles-quack"))
-  onKeyPress("z", () => play("waddles-quack"))
+  onKeyPress("/", () => {
+    play("waddles-quack")
+    const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(waddles.pos.x, waddles.pos.y - 40),
+    ])
+    
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+    
+     setTimeout(function() {
+      play("nibbles-quack")
+      const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(nibbles.pos.x, nibbles.pos.y - 40),
+    ])
+    
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+    }, 1030);
+  })
+
 
   //creating food array order
   let foodOrder = randomArray(3);
@@ -322,7 +351,7 @@ scene('player1', () => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
         waddles.pos.x = rand(200, width() - 50);
-        waddles.pos.y = rand(250, 650);
+        waddles.pos.y = rand(250, 550);
       })
     })
   }
@@ -618,8 +647,65 @@ scene('player2', () => {
   ])
 
   // quacking 
-  onKeyPress("q", () => play("nibbles-quack"))
-  onKeyPress("z", () => play("waddles-quack"))
+  onKeyPress("q", () => {
+    play("nibbles-quack")
+    const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(nibbles.pos.x, nibbles.pos.y - 40),
+    ])
+    
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+    
+    setTimeout(function() {
+      play("waddles-quack")
+      const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(waddles.pos.x, waddles.pos.y - 40),
+    ])
+    
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+    }, 1300);
+  })
+  
+  onKeyPress("/", () => {
+    play("waddles-quack")
+    const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(waddles.pos.x, waddles.pos.y - 40),
+    ])
+    
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+    
+     setTimeout(function() {
+      play("nibbles-quack")
+      const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(nibbles.pos.x, nibbles.pos.y - 40),
+    ])
+    
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+    }, 1030);
+  })
 
   //score text for nibbles
   let nibblesScore = add([
@@ -692,13 +778,13 @@ scene('player2', () => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
         waddles.pos.x = rand(200, width() - 50);
-        waddles.pos.y = rand(250, 650);
+        waddles.pos.y = rand(250, 550);
       })
 
       enemy.onCollide('nibbles', () => {
         shake(2.5)
         nibbles.pos.x = rand(200, width() - 50);
-        nibbles.pos.y = rand(250, 650);
+        nibbles.pos.y = rand(250, 550);
       })
     })
   }
@@ -764,12 +850,13 @@ scene('player2', () => {
 //homescreen
 scene("home", () => {
 
-
+//add background
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
 
+//Display Game title
   add([
     text("Waddles  and  Nibbles  Eatery", {
       font: 'arcade',
@@ -880,17 +967,17 @@ scene("home", () => {
 
   //peppers motion 
   
-  // const nibblesAi = () => {
-  //   nibbles.move(nibbles.dir * nibbles.speed, 0)
-  //   if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 90) {
-  //     nibbles.dir = -nibbles.dir
-  //   }
+  const peppersAi = () => {
+    peppers.move(peppers.dir * peppers.speed, 0)
+    if (peppers.pos.x < 0 || peppers.pos.x > width() - 90) {
+      peppers.dir = -peppers.dir
+    }
 
-  //   nibbles.move(0, nibbles.dir * nibbles.speed)
-  //   if (nibbles.pos.y < 0 || nibbles.pos.y > height() - 120) {
-  //     nibbles.dir = -nibbles.dir;
-  //   }
-  // }
+    peppers.move(0, peppers.dir * peppers.speed)
+    if (peppers.pos.y < 0 || peppers.pos.y > height() - 120) {
+      peppers.dir = -peppers.dir;
+    }
+  }
   
 
   
@@ -901,6 +988,7 @@ scene("home", () => {
     cheeseAi()
     lettuceAi()
     bunAi()
+    peppersAi()
   })
 
   const music = play("home-music", {
@@ -977,12 +1065,12 @@ scene("home", () => {
 
 //game over scene
 scene("gameOver", () => {
-
+//add background
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
-
+//game over text
   add([
     text('GAME  OVER', {
       font: 'arcade',
@@ -993,6 +1081,7 @@ scene("gameOver", () => {
     color(0, 0, 0),
   ])
 
+//replay/ return to home screen
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
@@ -1008,12 +1097,13 @@ scene("gameOver", () => {
 })
 
 scene("waddles-win", () => {
-
+  
 })
 
 scene("nibbles-win", () => {
 
 })
+
 
 
 
