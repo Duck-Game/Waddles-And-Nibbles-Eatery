@@ -65,7 +65,7 @@ scene('player1', () => {
     sprite('background', { width: width(), height: height() }),
     scale(1)
   ])
-
+//hi
   //wall boundry
   add([
     rect(width(), 2),
