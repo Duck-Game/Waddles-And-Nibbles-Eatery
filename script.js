@@ -779,20 +779,32 @@ scene("home", () => {
   ])
 
   //load Sprite
-  const waddles = add([sprite('front-duck'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), body(), 'waddles', {
+  const waddles = add([sprite('front-duck'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'waddles', {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
-  const nibbles = add([sprite('nibbles-front'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), body(), 'nibbles', {
+  const nibbles = add([sprite('nibbles-front'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'nibbles', {
     speed: choose([180, 90]),
     dir: choose([-2, 2]),
   }]);
 
-  const burger = add([sprite('burger'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), body(), 'burger', {
+  const burger = add([sprite('burger'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'burger', {
     speed: choose([100, 50]),
     dir: choose([-3, 3]),
   }]);
-
+  
+  const cheese = add([sprite('cheese'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'cheese', {
+    speed: choose([100, 50]),
+    dir: choose([-3, 3]),
+  }]);
+  
+  const lettuce = add([sprite('lettuce'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'lettuce', {
+    speed: choose([100, 50]),
+    dir: choose([-3, 3]),
+  }]);
+  
+  
+  
   //nibbles motion 
   const nibblesAi = () => {
     nibbles.move(nibbles.dir * nibbles.speed, 0)
@@ -826,12 +838,30 @@ scene("home", () => {
       burger.dir = -burger.dir
     }
   }
+  
+  // Cheese motion 
+  const cheeseAi = () => {
+    cheese.move(cheese.dir * cheese.speed, 0)
+    if (cheese.pos.x < 0 || cheese.pos.x > width() - 90) {
+      cheese.dir = -cheese.dir
+    }
+  }
 
+  //lettuce
+  const lettuceAi = () => {
+    lettuce.move(lettuce.dir * lettuce.speed, 0)
+    if (lettuce.pos.x < 0 || lettuce.pos.x > width() - 90) {
+      lettuce.dir = -lettuce.dir
+    }
+  }
 
+  
   loop(0.015, () => {
     nibblesAi()
     waddlesAi()
     burgerAi()
+    cheeseAi()
+    lettuceAi()
   })
 
   const music = play("home-music", {
