@@ -16,7 +16,7 @@ loadSound("chomp", "sprites/chomp.mp3")
 loadSound("arcade", "sprites/arcade.mp3")
 loadSound("trash", "sprites/trash.mp3")
 loadSound("warp", "sprites/warp.mp3")
-
+loadSound("win", "sprites/win.mp3")
 
 //loading font
 loadFont('arcade', 'REDENSEK.TTF')
@@ -662,6 +662,7 @@ scene('player2', () => {
     nibblesContainer.length = 0
     resetNibblesSprites()
     shake(2.6)
+    play("trash")
   });
 
   //collecting items and storing in array
@@ -669,30 +670,35 @@ scene('player2', () => {
     nibblesContainer.push("bun")
     nibblesSprites.push(add([sprite('bun'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
+    play("touch-box")
   })
 
   nibbles.onCollide("cheese", () => {
     nibblesContainer.push("cheese")
     nibblesSprites.push(add([sprite('cheese'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
+    play("touch-box")
   })
 
   nibbles.onCollide("meat", () => {
     nibblesContainer.push("meat")
     nibblesSprites.push(add([sprite('meat'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
+    play("touch-box")
   })
 
   nibbles.onCollide("lettuce", () => {
     nibblesContainer.push("lettuce")
     nibblesSprites.push(add([sprite('lettuce'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
+    play("touch-box")
   })
 
   nibbles.onCollide("peppers", () => {
     nibblesContainer.push("peppers")
     nibblesSprites.push(add([sprite('peppers'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
+    play("touch-box")
   })
 
   //nibbles food text
@@ -935,12 +941,21 @@ scene('player2', () => {
 
       //shake on complete order
       shake(2)
+      
+      // Winner
+      if ( waddlesScore.value === 10){
+        go("waddles-win")
+      }
+      
     }
     else if (nibblesContainer.toString() === foodOrder.toString()) {
       nibblesScore.value++
       nibblesScore.text = `Score: ${nibblesScore.value}`
       waddlesContainer.length = 0
       nibblesContainer.length = 0
+      play("arcade", {
+        volume: 0.2,
+      })
 
       //reset food order
       orderUpdate()
@@ -951,6 +966,11 @@ scene('player2', () => {
 
       //shake on complete order
       shake(2)
+      
+      //nibles win
+      if ( nibblesScore.value === 10){
+        go("nibbles-win")
+      }
     }
 
     waddlesName()
@@ -1226,11 +1246,129 @@ scene("gameOver", () => {
 })
 
 scene("waddles-win", () => {
+    add([
+    sprite('background', { width: width(), height: height() }),
+    scale(1)
+  ])
+  
+  //Play sound
+  let music = play("win", {
+    volume: 0.2,
+  })
+  onKeyPress("m", () => music.paused = !music.paused)
+  
+   onSceneLeave(() => music.paused = true)
+
+//winning text
+  add([
+    text("Waddles WINS!!", {
+      size: 28,
+      align: 'center',
+    }),
+    pos(620, 400),
+  ])
+
+  const waddles = add([sprite('front-duck'), pos(650, 250), scale(5), area(), body(), 'waddles']);
+  const nibbles = add([sprite('nibbles-front'), pos(100, 220), scale(2.5), area(), body(), 'nibbles']);
+
+  const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
+  const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
+  const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
+
+  const breadTable = add([sprite('bread-table'), pos(300, 500), scale(1.2), area(), body({ isStatic: true }), 'bun']);
+  const cheeseTable = add([sprite('cheese-table'), pos(500, 500), scale(1.2), area(), body({ isStatic: true }), 'cheese']);
+  const meatTable = add([sprite('meat-table'), pos(700, 500), scale(1.2), area(), body({ isStatic: true }), 'meat']);
+  const lettuceTable = add([sprite('lettuce-table'), pos(900, 500), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
+  const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'peppers']);
+  
+  //confetti
+  const sprites = [
+    "peppers",
+    "cheese",
+    "lettuce",
+    'nibbles-back',
+    'bun',
+    'burger',
+    'egg',
+    ]
+    
+    // load elements on screen
+   const confetti = () => {
+     
+    let randomX = rand(0, width())
+    let particle = add([sprite(choose(sprites)), pos(randomX, 0), scale(1), area(), 'enemy', move(DOWN, 150),
+      offscreen({ destroy: true })
+    ])
+  }
+  loop(rand(1, 0.2), confetti)
+  
+  onKeyPress("space", () => go("player2"));
+  onKeyPress("escape", () => go("home"));
 
 })
 
 scene("nibbles-win", () => {
+   // background
+  add([
+    sprite('background', { width: width(), height: height() }),
+    scale(1)
+  ])
+  
+  //Play sound
+  let music = play("win", {
+    volume: 0.2,
+  })
+  onKeyPress("m", () => music.paused = !music.paused)
+  
+  onSceneLeave(() => music.paused = true)
 
+//winning text
+  add([
+    text("NIBBLES WINS!!", {
+      size: 28,
+      align: 'center',
+    }),
+    pos(620, 400),
+  ])
+
+  const waddles = add([sprite('front-duck'), pos(100, 220), scale(2.5), area(), body(), 'waddles']);
+  const nibbles = add([sprite('nibbles-front'), pos(650, 200), scale(5), area(), body(), 'nibbles']);
+
+  const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
+  const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
+  const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
+
+  const breadTable = add([sprite('bread-table'), pos(300, 500), scale(1.2), area(), body({ isStatic: true }), 'bun']);
+  const cheeseTable = add([sprite('cheese-table'), pos(500, 500), scale(1.2), area(), body({ isStatic: true }), 'cheese']);
+  const meatTable = add([sprite('meat-table'), pos(700, 500), scale(1.2), area(), body({ isStatic: true }), 'meat']);
+  const lettuceTable = add([sprite('lettuce-table'), pos(900, 500), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
+  const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'peppers']);
+  
+  //confetti
+  const sprites = [
+    "peppers",
+    "cheese",
+    "lettuce",
+    'nibbles-back',
+    'bun',
+    'burger',
+    'egg',
+    ]
+    
+    // load elements on screen
+   const confetti = () => {
+     
+    let randomX = rand(0, width())
+    let particle = add([sprite(choose(sprites)), pos(randomX, 0), scale(1), area(), 'enemy', move(DOWN, 150),
+      offscreen({ destroy: true })
+    ])
+  }
+  loop(rand(1, 0.2), confetti)
+  
+  onKeyPress("space", () => go("player2"));
+  onKeyPress("escape", () => go("home"));
+
+  
 })
 
 scene("easterEgg", () => {
@@ -1277,4 +1415,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('player2')
+go('home')
