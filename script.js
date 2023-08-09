@@ -1104,7 +1104,21 @@ scene("nibbles-win", () => {
 
 })
 
-
+scene("easterEgg", () => {
+  add([
+    text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly innocent quacks and friendly demeanor lay a sinister motive. The forest animals had no idea that the burgers on the menu were made from duck meat – the very meat that belonged to their fellow kind. The two ducks, driven by a twisted desire for power and control, devised a plan to exploit their own species for their nefarious culinary pursuits.', {
+      font: 'arcade',
+      size: 28
+    }),
+  ])
+  
+   add([
+    text('Hidden beneath the restaurant, in a damp and dimly lit cellar, Waddles and Nibbles conducted their gruesome operations. Ducks from all around the forest would mysteriously vanish, only to reappear on the menu as "Duck Delight Burgers." The eerie disappearance of fellow ducks fueled rumors and unease throughout the forest, but no one could ever trace the sinister source.', {
+      font: 'arcade',
+      size: 28
+    }),
+  ])
+})
 
 
 //starting game
