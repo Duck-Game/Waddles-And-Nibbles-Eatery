@@ -254,9 +254,9 @@ scene('player1', () => {
   //creating food array order
   let foodOrder = randomArray(3);
   let spriteArr = []
-  let orderPosition = 150
+  let orderPosition = 525
   for (let i = 0; i < foodOrder.length; i++) {
-    spriteArr.push(add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
+    spriteArr.push(add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
     orderPosition += 70
   }
   //function to destroy then recreate order
@@ -266,9 +266,9 @@ scene('player1', () => {
     destroy(spriteArr[3])
 
     foodOrder = randomArray(3)
-    orderPosition = 220
+    orderPosition = 595
     for (let i = 1; i < foodOrder.length - 1; i++) {
-      spriteArr[i] = (add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
+      spriteArr[i] = (add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
       orderPosition += 70
     }
   }
@@ -281,7 +281,7 @@ scene('player1', () => {
       font: 'arcade',
       size: 30
     }),
-    pos(700, 20),
+    pos(130, 20),
   ])
 
   const lowerTimer = () => {
@@ -699,9 +699,9 @@ scene('player2', () => {
   //creating food array order
   let foodOrder = randomArray(3);
   let spriteArr = []
-  let orderPosition = 150
+  let orderPosition = 525
   for (let i = 0; i < foodOrder.length; i++) {
-    spriteArr.push(add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
+    spriteArr.push(add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
     orderPosition += 70
   }
   //function to destroy then recreate order
@@ -711,9 +711,9 @@ scene('player2', () => {
     destroy(spriteArr[3])
 
     foodOrder = randomArray(3)
-    orderPosition = 220
+    orderPosition = 595
     for (let i = 1; i < foodOrder.length - 1; i++) {
-      spriteArr[i] = (add([sprite(foodOrder[i]), pos(150, orderPosition), scale(1.8)]))
+      spriteArr[i] = (add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
       orderPosition += 70
     }
   }
@@ -1119,4 +1119,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('player2')
+go('home')
