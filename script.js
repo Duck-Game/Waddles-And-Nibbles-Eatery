@@ -322,7 +322,7 @@ scene('player1', () => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
         waddles.pos.x = rand(200, width() - 50);
-        waddles.pos.y = rand(250, height() - 20);
+        waddles.pos.y = rand(250, height() - 50);
       })
     })
   }
@@ -692,7 +692,7 @@ scene('player2', () => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
         waddles.pos.x = rand(200, width() - 50);
-        waddles.pos.y = rand(250, height() - 20);
+        waddles.pos.y = rand(250, height() - 50);
       })
 
       enemy.onCollide('nibbles', () => {
@@ -915,8 +915,9 @@ scene("gameOver", () => {
   ])
 
   add([
-    text('game over', {
+    text('GAME  OVER', {
       font: 'arcade',
+      size: 40,
     }),
     anchor("center"),
     pos(width() / 2, height() / 2),
@@ -924,7 +925,7 @@ scene("gameOver", () => {
   ])
 
   add([
-    text('Press esc to go home or press space to restart', {
+    text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
       size: 28
     }),
