@@ -63,7 +63,28 @@ scene('player1', () => {
   add([
     rect(width(), 2),
     area(),
-    pos(0, 157),
+    pos(0, 150),
+    body({ isStatic: true }),
+  ]);
+  
+  add([
+    rect(width(), 2),
+    area(),
+    pos(0, 660),
+    body({ isStatic: true }),
+  ]);
+  
+  add([
+    rect(2, height()),
+    area(),
+    pos(-2, 0),
+    body({ isStatic: true }),
+  ]);
+  
+  add([
+    rect(2, height()),
+    area(),
+    pos(1450, 0),
     body({ isStatic: true }),
   ]);
 
@@ -365,10 +386,32 @@ scene('player2', () => {
   add([
     rect(width(), 2),
     area(),
-    pos(0, 157),
+    pos(0, 150),
+    body({ isStatic: true }),
+  ]);
+  
+   add([
+    rect(width(), 2),
+    area(),
+    pos(0, 660),
+    body({ isStatic: true }),
+  ]);
+  
+  add([
+    rect(2, height()),
+    area(),
+    pos(-2, 0),
+    body({ isStatic: true }),
+  ]);
+  
+  add([
+    rect(2, height()),
+    area(),
+    pos(1450, 0),
     body({ isStatic: true }),
   ]);
 
+  
   //setting sprite variables
   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
   const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
