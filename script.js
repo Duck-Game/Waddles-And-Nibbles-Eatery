@@ -10,7 +10,6 @@ loadSound("bonk", "sprites/bonk.mp3")
 loadSound("nibbles-quack", "sprites/nibbles-quack.mp3")
 loadSound("waddles-quack", "sprites/waddles-quack.mp3")
 loadSound("home-music", "sprites/home-music.mp3")
-loadSound("scary-music", "sprites/scary-music.mp3")
 
 
 //loading font
@@ -209,6 +208,8 @@ scene('player1', () => {
 
   onKeyPress("m", () => music.paused = !music.paused)
 
+  onSceneLeave(() => music.paused = true)
+
   // hitting nibbles
 
   waddles.onCollide('nibbles', () => {
@@ -260,14 +261,14 @@ scene('player1', () => {
   })
 
 
-//add white box around food
+  //add white box around food
   add([
     rect(350, 70),
     outline(1),
     pos(550, 70),
     color(255, 229, 180)
   ]);
-  
+
   //adding food order text
   add([
     text('Food   Order', {
@@ -385,7 +386,6 @@ scene('player1', () => {
 
     if (time < 1) {
       go('gameOver')
-      music.paused = true
     }
 
     //constantly setting name
@@ -649,6 +649,8 @@ scene('player2', () => {
 
   onKeyPress("m", () => music.paused = !music.paused)
 
+  onSceneLeave(() => music.paused = true)
+
   // hitting nibbles
   loadSound("bonk", "sprites/bonk.mp3")
 
@@ -746,7 +748,7 @@ scene('player2', () => {
     pos(550, 70),
     color(255, 229, 180)
   ]);
-  
+
   //adding food order text
   add([
     text('Food   Order', {
@@ -1038,6 +1040,8 @@ scene("home", () => {
 
   onKeyPress("m", () => music.paused = !music.paused)
 
+  onSceneLeave(() => music.paused = true)
+
   function addButton(txt, p, f) {
 
     // add a parent background object
@@ -1079,7 +1083,6 @@ scene("home", () => {
     // onClick() comes from area() component
     // it runs once when the object is clicked
     btn.onClick(f)
-    btn.onClick(() => music.paused = true)
 
     return btn
 
@@ -1150,15 +1153,18 @@ scene("easterEgg", () => {
     text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly\n innocent quacks and friendly demeanor lay a sinister motive. The forest animals\n had no idea that the burgers on the menu were made from duck meat – the very meat\n that belonged to their fellow kind. The two ducks, driven by a twisted\n desire for power and control, devised a plan to exploit their own species for\n their nefarious culinary pursuits.\n\n Hidden beneath the restaurant, in a damp and dimly lit cellar,\n Waddles and Nibbles conducted their gruesome operations. Ducks from all\n around the forest would mysteriously vanish, only to reappear on the menu\n as "Duck Delight Burgers." The eerie disappearance of fellow ducks\n fueled rumors and unease throughout the forest, but no one could\n ever trace the sinister source.', {
       font: 'arcade',
       size: 28,
-
+      align: 'center',
     }),
     anchor("center"),
     pos(width() / 2, height() / 2),
   ])
 
+  //music
+  loadSound("scary-music", "sprites/scary-music.mp3")
+
   const music = play("scary-music", {
     volume: 0.1,
-    loop: true
+    loop: true,
   })
 
   onKeyPress("m", () => music.paused = !music.paused)
@@ -1166,7 +1172,8 @@ scene("easterEgg", () => {
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
-      size: 28
+      size: 28,
+      align: 'center'
     }),
     anchor("center"),
     pos(width() / 2, 600),
@@ -1175,8 +1182,10 @@ scene("easterEgg", () => {
   onKeyPress("space", () => go("player1"));
   onKeyPress("escape", () => go("home"));
 
+  onSceneLeave(() => music.paused = true)
+
 })
 
 
 //starting game
-go('player2')
+go('home')
