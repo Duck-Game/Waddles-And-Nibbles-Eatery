@@ -450,8 +450,8 @@ scene('player2', () => {
 
 
   //setting sprite variables
-  const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
+  const waddles = add([sprite('front-duck'), pos(740, 190), scale(2.5), area(), body(), 'waddles']);
+  const nibbles = add([sprite('nibbles-front'), pos(650, 180), scale(2.5), area(), body(), 'nibbles']);
   const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
   const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
   const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -1142,4 +1142,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('player1')
+go('home')
