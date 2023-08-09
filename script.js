@@ -93,8 +93,8 @@ scene('player1', () => {
   ]);
 
   //setting sprite variables
-  const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
+  const waddles = add([sprite('front-duck'), pos(690, 220), scale(2.5), area(), body(), 'waddles']);
+  const nibbles = add([sprite('nibbles-front'), pos(400, 180), scale(2.5), area(), body(), 'nibbles']);
   const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
   const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
   const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -129,25 +129,25 @@ scene('player1', () => {
 
   // movement duck 2
 
-  onKeyDown('d', () => {
-    nibbles.use(sprite('nibbles-right'))
-    nibbles.move(SPEED, 0)
-  });
+  // onKeyDown('d', () => {
+  //   nibbles.use(sprite('nibbles-right'))
+  //   nibbles.move(SPEED, 0)
+  // });
 
-  onKeyDown('a', () => {
-    nibbles.use(sprite('nibbles-left'))
-    nibbles.move(-SPEED, 0)
-  });
+  // onKeyDown('a', () => {
+  //   nibbles.use(sprite('nibbles-left'))
+  //   nibbles.move(-SPEED, 0)
+  // });
 
-  onKeyDown('w', () => {
-    nibbles.use(sprite('nibbles-back'))
-    nibbles.move(0, -SPEED)
-  });
+  // onKeyDown('w', () => {
+  //   nibbles.use(sprite('nibbles-back'))
+  //   nibbles.move(0, -SPEED)
+  // });
 
-  onKeyDown('s', () => {
-    nibbles.use(sprite('nibbles-front'))
-    nibbles.move(0, SPEED)
-  });
+  // onKeyDown('s', () => {
+  //   nibbles.use(sprite('nibbles-front'))
+  //   nibbles.move(0, SPEED)
+  // });
 
   //random order function
   let foods = ['cheese', 'meat', 'lettuce', 'peppers']
@@ -1120,7 +1120,6 @@ scene("easterEgg", () => {
   ])
   
   const music = play("scary-music", {
-    paused: true,
     volume: 0.1,
     loop: true
   })
@@ -1143,4 +1142,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('easterEgg')
+go('player1')
