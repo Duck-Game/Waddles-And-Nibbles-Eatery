@@ -19,7 +19,7 @@ loadSound("warp", "sprites/warp.mp3")
 
 
 //loading font
-loadFont('arcade', 'ARCADECLASSIC.TTF')
+loadFont('arcade', 'REDENSEK.TTF')
 
 //loading sprites
 loadSprite('left-counter', 'sprites/left-counter.png')
@@ -65,7 +65,7 @@ scene('player1', () => {
     sprite('background', { width: width(), height: height() }),
     scale(1)
   ])
-//hi
+  //hi
   //wall boundry
   add([
     rect(width(), 2),
@@ -99,7 +99,7 @@ scene('player1', () => {
 
   //setting sprite variables
   const waddles = add([sprite('front-duck'), pos(690, 220), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('nibbles-front'), pos(400, 180), scale(2.5), area(), body(), 'nibbles']);
+  const nibbles = add([sprite('nibbles-front'), pos(400, 180), scale(2.5), area(), body({ isStatic: true }), 'nibbles']);
   const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
   const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
   const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -209,9 +209,9 @@ scene('player1', () => {
   add([
     text('Waddles Food', {
       font: 'arcade',
-      size: 20
+      size: 35
     }),
-    pos(1150, 175),
+    pos(1130, 167),
   ])
 
   //play Music 
@@ -237,14 +237,43 @@ scene('player1', () => {
   let score1 = add([
     text(`Score: 0`, {
       font: 'arcade',
-      size: 30
+      size: 35
     }),
     pos(1200, 20),
     { value: 0 }
   ])
   // quacking 
 
-  onKeyPress("q", () => play("nibbles-quack"))
+  onKeyPress("q", () => {
+    play("nibbles-quack")
+    const nameTag = add([
+      text('Quack', {
+        font: 'arcade',
+        size: 20
+      }),
+      pos(nibbles.pos.x, nibbles.pos.y - 40),
+    ])
+
+    setTimeout(function() {
+      destroy(nameTag)
+    }, 200);
+
+    setTimeout(function() {
+      play("waddles-quack")
+      const nameTag = add([
+        text('Quack', {
+          font: 'arcade',
+          size: 20
+        }),
+        pos(waddles.pos.x, waddles.pos.y - 40),
+      ])
+
+      setTimeout(function() {
+        destroy(nameTag)
+      }, 200);
+    }, 1030);
+  })
+
   onKeyPress("/", () => {
     play("waddles-quack")
     const nameTag = add([
@@ -286,11 +315,11 @@ scene('player1', () => {
 
   //adding food order text
   add([
-    text('Food   Order', {
+    text('Food  Order', {
       font: 'arcade',
-      size: 25
+      size: 35
     }),
-    pos(658, 20),
+    pos(635, 15),
   ])
 
   //creating food array order
@@ -321,9 +350,9 @@ scene('player1', () => {
   let timer = add([
     text(`0:${time}`, {
       font: 'arcade',
-      size: 30
+      size: 40
     }),
-    pos(130, 20),
+    pos(145, 15),
   ])
 
   const lowerTimer = () => {
@@ -340,9 +369,9 @@ scene('player1', () => {
     const nameTag = add([
       text('Waddles', {
         font: 'arcade',
-        size: 17
+        size: 22
       }),
-      pos(waddles.pos.x, waddles.pos.y - 15),
+      pos(waddles.pos.x - 7, waddles.pos.y - 18),
     ])
     setTimeout(function() {
       destroy(nameTag)
@@ -354,9 +383,9 @@ scene('player1', () => {
     const nameTag = add([
       text('Nibbles', {
         font: 'arcade',
-        size: 17
+        size: 22
       }),
-      pos(nibbles.pos.x, nibbles.pos.y - 15),
+      pos(nibbles.pos.x, nibbles.pos.y - 10),
     ])
     setTimeout(function() {
       destroy(nameTag)
@@ -368,13 +397,13 @@ scene('player1', () => {
     let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
-    
+
     enemy.onCollide('waddles', () => {
       play("warp", {
-          volume: 0.3,
-        })
+        volume: 0.3,
+      })
     })
-    
+
     onUpdate(() => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
@@ -385,13 +414,15 @@ scene('player1', () => {
   }
   loop(rand(2, 4), addObstacle)
 
+  onKeyPress("escape", () => go("home"));
+
   //constantly check for these conditions
   onUpdate(() => {
     if (waddlesContainer.toString() === foodOrder.toString()) {
       score1.value++
       score1.text = `Score: ${score1.value}`
       waddlesContainer.length = 0
-      
+
       play("arcade", {
         volume: 0.2,
       })
@@ -607,11 +638,11 @@ scene('player2', () => {
   })
 
   add([
-    text('Waddles   Food', {
+    text('Waddles Food', {
       font: 'arcade',
-      size: 20
+      size: 33
     }),
-    pos(1150, 175),
+    pos(1110, 162),
   ])
 
   //array for nibbles
@@ -666,11 +697,11 @@ scene('player2', () => {
 
   //nibbles food text
   add([
-    text('Nibbles   Food', {
+    text('Nibbles Food', {
       font: 'arcade',
-      size: 20
+      size: 33
     }),
-    pos(170, 175),
+    pos(160, 162),
   ])
 
   //play Music 
@@ -685,22 +716,22 @@ scene('player2', () => {
   onSceneLeave(() => music.paused = true)
 
   // hitting nibbles
-  
-  
+
+
   waddles.onCollide('nibbles', () => {
     shake(3)
     addKaboom(nibbles.pos)
     play("bonk")
     waddles.pos.x = waddles.pos.x + 50
     nibbles.pos.x = nibbles.pos.x - 50
-    
+
   })
 
   //score text for waddles
   let waddlesScore = add([
     text(`Score: 0`, {
       font: 'arcade',
-      size: 30
+      size: 32
     }),
     pos(1200, 20),
     { value: 0 }
@@ -712,7 +743,7 @@ scene('player2', () => {
     const nameTag = add([
       text('Quack', {
         font: 'arcade',
-        size: 20
+        size: 22
       }),
       pos(nibbles.pos.x, nibbles.pos.y - 40),
     ])
@@ -771,7 +802,7 @@ scene('player2', () => {
   let nibblesScore = add([
     text(`Score: 0`, {
       font: 'arcade',
-      size: 30
+      size: 32
     }),
     pos(200, 20),
     { value: 0 }
@@ -787,9 +818,9 @@ scene('player2', () => {
 
   //adding food order text
   add([
-    text('Food   Order', {
+    text('Food Order', {
       font: 'arcade',
-      size: 25
+      size: 32
     }),
     pos(658, 20),
   ])
@@ -821,9 +852,9 @@ scene('player2', () => {
     const nameTag = add([
       text('Waddles', {
         font: 'arcade',
-        size: 17
+        size: 19
       }),
-      pos(waddles.pos.x, waddles.pos.y - 15),
+      pos(waddles.pos.x + 2, waddles.pos.y - 18),
     ])
     setTimeout(function() {
       destroy(nameTag)
@@ -835,9 +866,9 @@ scene('player2', () => {
     const nameTag = add([
       text('Nibbles', {
         font: 'arcade',
-        size: 17
+        size: 19
       }),
-      pos(nibbles.pos.x, nibbles.pos.y - 15),
+      pos(nibbles.pos.x + 3, nibbles.pos.y - 15),
     ])
     setTimeout(function() {
       destroy(nameTag)
@@ -850,17 +881,17 @@ scene('player2', () => {
     let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
-    
+
     enemy.onCollide('waddles', () => {
       play("warp", {
-          volume: 0.3,
-        })
+        volume: 0.3,
+      })
     })
-    
+
     enemy.onCollide('nibbles', () => {
       play("warp", {
-          volume: 0.3,
-        })
+        volume: 0.3,
+      })
     })
 
     onUpdate(() => {
@@ -880,6 +911,9 @@ scene('player2', () => {
 
   loop(rand(2, 4), addObstacle)
 
+  //escape game
+  onKeyPress("escape", () => go("home"));
+
   //constantly check for these conditions
   onUpdate(() => {
     if (waddlesContainer.toString() === foodOrder.toString()) {
@@ -891,7 +925,7 @@ scene('player2', () => {
       play("arcade", {
         volume: 0.2,
       })
-      
+
       //reset food order
       orderUpdate()
 
@@ -953,6 +987,7 @@ scene("home", () => {
   add([
     text("Waddles  and  Nibbles  Eatery", {
       font: 'arcade',
+      size: 40
     }),
     scale(1),
     pos(width() / 3, 15)
@@ -1168,7 +1203,7 @@ scene("gameOver", () => {
   add([
     text('GAME  OVER', {
       font: 'arcade',
-      size: 40,
+      size: 45,
     }),
     anchor("center"),
     pos(width() / 2, height() / 2),
@@ -1179,10 +1214,10 @@ scene("gameOver", () => {
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
-      size: 28
+      size: 35
     }),
     anchor("center"),
-    pos(width() / 2, (height() / 2) + 40),
+    pos(width() / 2, (height() / 2) + 55),
     color(0, 0, 0),
   ])
 
@@ -1201,16 +1236,16 @@ scene("nibbles-win", () => {
 scene("easterEgg", () => {
   //background color
   setBackground(0, 0, 0)
-  
+
   //background text
   add([
     text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly\n innocent quacks and friendly demeanor lay a sinister motive. The forest animals\n had no idea that the burgers on the menu were made from duck meat – the very meat\n that belonged to their fellow kind. The two ducks, driven by a twisted\n desire for power and control, devised a plan to exploit their own species for\n their nefarious culinary pursuits.\n\n Hidden beneath the restaurant, in a damp and dimly lit cellar,\n Waddles and Nibbles conducted their gruesome operations. Ducks from all\n around the forest would mysteriously vanish, only to reappear on the menu\n as "Duck Delight Burgers." The eerie disappearance of fellow ducks\n fueled rumors and unease throughout the forest, but no one could\n ever trace the sinister source.', {
       font: 'arcade',
-      size: 28,
+      size: 35,
       align: 'center',
     }),
     anchor("center"),
-    pos(width() / 2, height() / 2),
+    pos(width() / 2, height() / 2 - 40),
   ])
 
   //play music
@@ -1221,15 +1256,16 @@ scene("easterEgg", () => {
 
   onKeyPress("m", () => music.paused = !music.paused)
 
-  //return to scree/ replay
+  //return to screen / replay
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
-      size: 28,
+      size: 38,
       align: 'center'
     }),
     anchor("center"),
-    pos(width() / 2, 600),
+    pos(width() / 2, 610),
+    color(180, 180, 180)
   ])
 
   onKeyPress("space", () => go("player1"));
@@ -1241,4 +1277,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('home')
+go('player2')
