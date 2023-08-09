@@ -322,7 +322,7 @@ scene('player1', () => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
         waddles.pos.x = rand(200, width() - 50);
-        waddles.pos.y = rand(250, height() - 50);
+        waddles.pos.y = rand(250, 650);
       })
     })
   }
@@ -692,13 +692,13 @@ scene('player2', () => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
         waddles.pos.x = rand(200, width() - 50);
-        waddles.pos.y = rand(250, height() - 50);
+        waddles.pos.y = rand(250, 650);
       })
 
       enemy.onCollide('nibbles', () => {
         shake(2.5)
         nibbles.pos.x = rand(200, width() - 50);
-        nibbles.pos.y = rand(250, height() - 20);
+        nibbles.pos.y = rand(250, 650);
       })
     })
   }
@@ -783,6 +783,7 @@ scene("home", () => {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
+  
   const nibbles = add([sprite('nibbles-front'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'nibbles', {
     speed: choose([180, 90]),
     dir: choose([-2, 2]),
@@ -803,7 +804,15 @@ scene("home", () => {
     dir: choose([-3, 3]),
   }]);
   
+  const bun = add([sprite('bun'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'bun', {
+    speed: choose([230, 300]),
+    dir: choose([-1, 1]),
+  }]);
   
+  const peppers = add([sprite('peppers'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'peppers', {
+    speed: choose([230, 300]),
+    dir: choose([-1, 1]),
+  }]);
   
   //nibbles motion 
   const nibblesAi = () => {
@@ -847,13 +856,42 @@ scene("home", () => {
     }
   }
 
-  //lettuce
+  //lettuce motion
   const lettuceAi = () => {
     lettuce.move(lettuce.dir * lettuce.speed, 0)
     if (lettuce.pos.x < 0 || lettuce.pos.x > width() - 90) {
       lettuce.dir = -lettuce.dir
     }
   }
+  
+  //bun motion 
+  
+  const bunAi = () => {
+    bun.move(bun.dir * bun.speed, 0)
+    if (bun.pos.x < 0 || bun.pos.x > width() - 90) {
+      bun.dir = -bun.dir
+    }
+
+    bun.move(0, bun.dir * bun.speed)
+    if (bun.pos.y < 0 || bun.pos.y > height() - 120) {
+      bun.dir = -bun.dir;
+    }
+  }
+
+  //peppers motion 
+  
+  // const nibblesAi = () => {
+  //   nibbles.move(nibbles.dir * nibbles.speed, 0)
+  //   if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 90) {
+  //     nibbles.dir = -nibbles.dir
+  //   }
+
+  //   nibbles.move(0, nibbles.dir * nibbles.speed)
+  //   if (nibbles.pos.y < 0 || nibbles.pos.y > height() - 120) {
+  //     nibbles.dir = -nibbles.dir;
+  //   }
+  // }
+  
 
   
   loop(0.015, () => {
@@ -862,6 +900,7 @@ scene("home", () => {
     burgerAi()
     cheeseAi()
     lettuceAi()
+    bunAi()
   })
 
   const music = play("home-music", {
