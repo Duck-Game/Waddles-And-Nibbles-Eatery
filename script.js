@@ -143,13 +143,13 @@ scene('player1', () => {
 
   const waddlesContainer = []
   const waddlesSprites = []
-  let waddlesContainerPos = 150
+  let waddlesContainerPos = 1015
 
   const resetWaddlesSprites = () => {
     for (let i = 0; i < waddlesSprites.length; i++) {
       destroy(waddlesSprites[i])
     }
-    waddlesContainerPos = 150
+    waddlesContainerPos = 1015
   }
 
   //deleting items from array
@@ -163,33 +163,42 @@ scene('player1', () => {
   //collecting items and storing in array
   waddles.onCollide("bun", () => {
     waddlesContainer.push("bun")
-    waddlesSprites.push(add([sprite('bun'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('bun'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("cheese", () => {
     waddlesContainer.push("cheese")
-    waddlesSprites.push(add([sprite('cheese'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('cheese'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("meat", () => {
     waddlesContainer.push("meat")
-    waddlesSprites.push(add([sprite('meat'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('meat'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("lettuce", () => {
     waddlesContainer.push("lettuce")
-    waddlesSprites.push(add([sprite('lettuce'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('lettuce'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("peppers", () => {
     waddlesContainer.push("peppers")
-    waddlesSprites.push(add([sprite('peppers'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('peppers'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
+
+  //waddles container name
+  add([
+    text('Waddles Food', {
+      font: 'arcade',
+      size: 20
+    }),
+    pos(1150, 175),
+  ])
 
   //play Music 
   const music = play("music", {
@@ -229,34 +238,51 @@ scene('player1', () => {
       }),
       pos(waddles.pos.x, waddles.pos.y - 40),
     ])
-    
+
     setTimeout(function() {
       destroy(nameTag)
     }, 200);
-    
-     setTimeout(function() {
+
+    setTimeout(function() {
       play("nibbles-quack")
       const nameTag = add([
-      text('Quack', {
-        font: 'arcade',
-        size: 20
-      }),
-      pos(nibbles.pos.x, nibbles.pos.y - 40),
-    ])
-    
-    setTimeout(function() {
-      destroy(nameTag)
-    }, 200);
+        text('Quack', {
+          font: 'arcade',
+          size: 20
+        }),
+        pos(nibbles.pos.x, nibbles.pos.y - 40),
+      ])
+
+      setTimeout(function() {
+        destroy(nameTag)
+      }, 200);
     }, 1030);
   })
 
 
+//add white box around food
+  add([
+    rect(350, 70),
+    outline(1),
+    pos(550, 70),
+    color(255, 229, 180)
+  ]);
+  
+  //adding food order text
+  add([
+    text('Food   Order', {
+      font: 'arcade',
+      size: 25
+    }),
+    pos(658, 20),
+  ])
+
   //creating food array order
   let foodOrder = randomArray(3);
   let spriteArr = []
-  let orderPosition = 525
+  let orderPosition = 550
   for (let i = 0; i < foodOrder.length; i++) {
-    spriteArr.push(add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
+    spriteArr.push(add([sprite(foodOrder[i]), pos(orderPosition, 75), scale(1.6)]))
     orderPosition += 70
   }
   //function to destroy then recreate order
@@ -266,9 +292,9 @@ scene('player1', () => {
     destroy(spriteArr[3])
 
     foodOrder = randomArray(3)
-    orderPosition = 595
+    orderPosition = 620
     for (let i = 1; i < foodOrder.length - 1; i++) {
-      spriteArr[i] = (add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
+      spriteArr[i] = (add([sprite(foodOrder[i]), pos(orderPosition, 75), scale(1.6)]))
       orderPosition += 70
     }
   }
@@ -500,13 +526,13 @@ scene('player2', () => {
   //array for waddles
   const waddlesContainer = []
   const waddlesSprites = []
-  let waddlesContainerPos = 150
+  let waddlesContainerPos = 1015
 
   const resetWaddlesSprites = () => {
     for (let i = 0; i < waddlesSprites.length; i++) {
       destroy(waddlesSprites[i])
     }
-    waddlesContainerPos = 150
+    waddlesContainerPos = 1015
   }
 
   //deleting items from array
@@ -519,44 +545,52 @@ scene('player2', () => {
   //collecting items and storing in array
   waddles.onCollide("bun", () => {
     waddlesContainer.push("bun")
-    waddlesSprites.push(add([sprite('bun'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('bun'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("cheese", () => {
     waddlesContainer.push("cheese")
-    waddlesSprites.push(add([sprite('cheese'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('cheese'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("meat", () => {
     waddlesContainer.push("meat")
-    waddlesSprites.push(add([sprite('meat'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('meat'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("lettuce", () => {
     waddlesContainer.push("lettuce")
-    waddlesSprites.push(add([sprite('lettuce'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('lettuce'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
 
   waddles.onCollide("peppers", () => {
     waddlesContainer.push("peppers")
-    waddlesSprites.push(add([sprite('peppers'), pos(1150, waddlesContainerPos), scale(1.5)]))
+    waddlesSprites.push(add([sprite('peppers'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
   })
+
+  add([
+    text('Waddles   Food', {
+      font: 'arcade',
+      size: 20
+    }),
+    pos(1150, 175),
+  ])
 
   //array for nibbles
   const nibblesContainer = []
   const nibblesSprites = []
-  let nibblesContainerPos = 150
+  let nibblesContainerPos = 20
 
   const resetNibblesSprites = () => {
     for (let i = 0; i < nibblesSprites.length; i++) {
       destroy(nibblesSprites[i])
     }
-    nibblesContainerPos = 150
+    nibblesContainerPos = 20
   }
 
   //deleting items from array
@@ -569,33 +603,42 @@ scene('player2', () => {
   //collecting items and storing in array
   nibbles.onCollide("bun", () => {
     nibblesContainer.push("bun")
-    nibblesSprites.push(add([sprite('bun'), pos(1200, nibblesContainerPos), scale(1.5)]))
+    nibblesSprites.push(add([sprite('bun'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
   })
 
   nibbles.onCollide("cheese", () => {
     nibblesContainer.push("cheese")
-    nibblesSprites.push(add([sprite('cheese'), pos(1200, nibblesContainerPos), scale(1.5)]))
+    nibblesSprites.push(add([sprite('cheese'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
   })
 
   nibbles.onCollide("meat", () => {
     nibblesContainer.push("meat")
-    nibblesSprites.push(add([sprite('meat'), pos(1200, nibblesContainerPos), scale(1.5)]))
+    nibblesSprites.push(add([sprite('meat'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
   })
 
   nibbles.onCollide("lettuce", () => {
     nibblesContainer.push("lettuce")
-    nibblesSprites.push(add([sprite('lettuce'), pos(1200, nibblesContainerPos), scale(1.5)]))
+    nibblesSprites.push(add([sprite('lettuce'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
   })
 
   nibbles.onCollide("peppers", () => {
     nibblesContainer.push("peppers")
-    nibblesSprites.push(add([sprite('peppers'), pos(1200, nibblesContainerPos), scale(1.5)]))
+    nibblesSprites.push(add([sprite('peppers'), pos(nibblesContainerPos, 200), scale(1.5)]))
     nibblesContainerPos += 70
   })
+
+  //nibbles food text
+  add([
+    text('Nibbles   Food', {
+      font: 'arcade',
+      size: 20
+    }),
+    pos(170, 175),
+  ])
 
   //play Music 
   const music = play("music", {
@@ -635,27 +678,27 @@ scene('player2', () => {
       }),
       pos(nibbles.pos.x, nibbles.pos.y - 40),
     ])
-    
+
     setTimeout(function() {
       destroy(nameTag)
     }, 200);
-    
+
     setTimeout(function() {
       play("waddles-quack")
       const nameTag = add([
-      text('Quack', {
-        font: 'arcade',
-        size: 20
-      }),
-      pos(waddles.pos.x, waddles.pos.y - 40),
-    ])
-    
-    setTimeout(function() {
-      destroy(nameTag)
-    }, 200);
+        text('Quack', {
+          font: 'arcade',
+          size: 20
+        }),
+        pos(waddles.pos.x, waddles.pos.y - 40),
+      ])
+
+      setTimeout(function() {
+        destroy(nameTag)
+      }, 200);
     }, 1300);
   })
-  
+
   onKeyPress("/", () => {
     play("waddles-quack")
     const nameTag = add([
@@ -665,24 +708,24 @@ scene('player2', () => {
       }),
       pos(waddles.pos.x, waddles.pos.y - 40),
     ])
-    
+
     setTimeout(function() {
       destroy(nameTag)
     }, 200);
-    
-     setTimeout(function() {
+
+    setTimeout(function() {
       play("nibbles-quack")
       const nameTag = add([
-      text('Quack', {
-        font: 'arcade',
-        size: 20
-      }),
-      pos(nibbles.pos.x, nibbles.pos.y - 40),
-    ])
-    
-    setTimeout(function() {
-      destroy(nameTag)
-    }, 200);
+        text('Quack', {
+          font: 'arcade',
+          size: 20
+        }),
+        pos(nibbles.pos.x, nibbles.pos.y - 40),
+      ])
+
+      setTimeout(function() {
+        destroy(nameTag)
+      }, 200);
     }, 1030);
   })
 
@@ -696,12 +739,29 @@ scene('player2', () => {
     { value: 0 }
   ])
 
+  //add white box around food
+  add([
+    rect(350, 70),
+    outline(1),
+    pos(550, 70),
+    color(255, 229, 180)
+  ]);
+  
+  //adding food order text
+  add([
+    text('Food   Order', {
+      font: 'arcade',
+      size: 25
+    }),
+    pos(658, 20),
+  ])
+
   //creating food array order
   let foodOrder = randomArray(3);
   let spriteArr = []
-  let orderPosition = 525
+  let orderPosition = 550
   for (let i = 0; i < foodOrder.length; i++) {
-    spriteArr.push(add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
+    spriteArr.push(add([sprite(foodOrder[i]), pos(orderPosition, 75), scale(1.6)]))
     orderPosition += 70
   }
   //function to destroy then recreate order
@@ -711,9 +771,9 @@ scene('player2', () => {
     destroy(spriteArr[3])
 
     foodOrder = randomArray(3)
-    orderPosition = 595
+    orderPosition = 620
     for (let i = 1; i < foodOrder.length - 1; i++) {
-      spriteArr[i] = (add([sprite(foodOrder[i]), pos(orderPosition, 1), scale(1.8)]))
+      spriteArr[i] = (add([sprite(foodOrder[i]), pos(orderPosition, 75), scale(1.6)]))
       orderPosition += 70
     }
   }
@@ -829,13 +889,13 @@ scene('player2', () => {
 //homescreen
 scene("home", () => {
 
-//add background
+  //add background
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
 
-//Display Game title
+  //Display Game title
   add([
     text("Waddles  and  Nibbles  Eatery", {
       font: 'arcade',
@@ -849,7 +909,7 @@ scene("home", () => {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
-  
+
   const nibbles = add([sprite('nibbles-front'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'nibbles', {
     speed: choose([180, 90]),
     dir: choose([-2, 2]),
@@ -859,27 +919,27 @@ scene("home", () => {
     speed: choose([100, 50]),
     dir: choose([-3, 3]),
   }]);
-  
+
   const cheese = add([sprite('cheese'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'cheese', {
     speed: choose([100, 50]),
     dir: choose([-3, 3]),
   }]);
-  
+
   const lettuce = add([sprite('lettuce'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'lettuce', {
     speed: choose([100, 50]),
     dir: choose([-3, 3]),
   }]);
-  
+
   const bun = add([sprite('bun'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'bun', {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
-  
+
   const peppers = add([sprite('peppers'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), 'peppers', {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
-  
+
   //nibbles motion 
   const nibblesAi = () => {
     nibbles.move(nibbles.dir * nibbles.speed, 0)
@@ -913,7 +973,7 @@ scene("home", () => {
       burger.dir = -burger.dir
     }
   }
-  
+
   // Cheese motion 
   const cheeseAi = () => {
     cheese.move(cheese.dir * cheese.speed, 0)
@@ -929,9 +989,9 @@ scene("home", () => {
       lettuce.dir = -lettuce.dir
     }
   }
-  
+
   //bun motion 
-  
+
   const bunAi = () => {
     bun.move(bun.dir * bun.speed, 0)
     if (bun.pos.x < 0 || bun.pos.x > width() - 90) {
@@ -945,7 +1005,7 @@ scene("home", () => {
   }
 
   //peppers motion 
-  
+
   const peppersAi = () => {
     peppers.move(peppers.dir * peppers.speed, 0)
     if (peppers.pos.x < 0 || peppers.pos.x > width() - 90) {
@@ -957,9 +1017,9 @@ scene("home", () => {
       peppers.dir = -peppers.dir;
     }
   }
-  
 
-  
+
+
   loop(0.015, () => {
     nibblesAi()
     waddlesAi()
@@ -1044,12 +1104,12 @@ scene("home", () => {
 
 //game over scene
 scene("gameOver", () => {
-//add background
+  //add background
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
-//game over text
+  //game over text
   add([
     text('GAME  OVER', {
       font: 'arcade',
@@ -1060,7 +1120,7 @@ scene("gameOver", () => {
     color(0, 0, 0),
   ])
 
-//replay/ return to home screen
+  //replay/ return to home screen
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
@@ -1076,7 +1136,7 @@ scene("gameOver", () => {
 })
 
 scene("waddles-win", () => {
-  
+
 })
 
 scene("nibbles-win", () => {
@@ -1084,25 +1144,25 @@ scene("nibbles-win", () => {
 })
 
 scene("easterEgg", () => {
-  
+
   setBackground(0, 0, 0)
   add([
     text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly\n innocent quacks and friendly demeanor lay a sinister motive. The forest animals\n had no idea that the burgers on the menu were made from duck meat – the very meat\n that belonged to their fellow kind. The two ducks, driven by a twisted\n desire for power and control, devised a plan to exploit their own species for\n their nefarious culinary pursuits.\n\n Hidden beneath the restaurant, in a damp and dimly lit cellar,\n Waddles and Nibbles conducted their gruesome operations. Ducks from all\n around the forest would mysteriously vanish, only to reappear on the menu\n as "Duck Delight Burgers." The eerie disappearance of fellow ducks\n fueled rumors and unease throughout the forest, but no one could\n ever trace the sinister source.', {
       font: 'arcade',
       size: 28,
-      
+
     }),
     anchor("center"),
     pos(width() / 2, height() / 2),
   ])
-  
+
   const music = play("scary-music", {
     volume: 0.1,
     loop: true
   })
 
   onKeyPress("m", () => music.paused = !music.paused)
-  
+
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
@@ -1119,4 +1179,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('home')
+go('player2')
