@@ -10,6 +10,8 @@ loadSound("bonk", "sprites/bonk.mp3")
 loadSound("nibbles-quack", "sprites/nibbles-quack.mp3")
 loadSound("waddles-quack", "sprites/waddles-quack.mp3")
 loadSound("home-music", "sprites/home-music.mp3")
+loadSound("scary-music", "sprites/scary-music.mp3")
+
 
 //loading font
 loadFont('arcade', 'ARCADECLASSIC.TTF')
@@ -1105,21 +1107,40 @@ scene("nibbles-win", () => {
 })
 
 scene("easterEgg", () => {
+  
+  setBackground(0, 0, 0)
   add([
-    text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly innocent quacks and friendly demeanor lay a sinister motive. The forest animals had no idea that the burgers on the menu were made from duck meat – the very meat that belonged to their fellow kind. The two ducks, driven by a twisted desire for power and control, devised a plan to exploit their own species for their nefarious culinary pursuits.', {
+    text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly\n innocent quacks and friendly demeanor lay a sinister motive. The forest animals\n had no idea that the burgers on the menu were made from duck meat – the very meat\n that belonged to their fellow kind. The two ducks, driven by a twisted\n desire for power and control, devised a plan to exploit their own species for\n their nefarious culinary pursuits.\n\n Hidden beneath the restaurant, in a damp and dimly lit cellar,\n Waddles and Nibbles conducted their gruesome operations. Ducks from all\n around the forest would mysteriously vanish, only to reappear on the menu\n as "Duck Delight Burgers." The eerie disappearance of fellow ducks\n fueled rumors and unease throughout the forest, but no one could\n ever trace the sinister source.', {
       font: 'arcade',
-      size: 28
+      size: 28,
+      
     }),
+    anchor("center"),
+    pos(width() / 2, height() / 2),
   ])
   
-   add([
-    text('Hidden beneath the restaurant, in a damp and dimly lit cellar, Waddles and Nibbles conducted their gruesome operations. Ducks from all around the forest would mysteriously vanish, only to reappear on the menu as "Duck Delight Burgers." The eerie disappearance of fellow ducks fueled rumors and unease throughout the forest, but no one could ever trace the sinister source.', {
+  const music = play("scary-music", {
+    paused: true,
+    volume: 0.1,
+    loop: true
+  })
+
+  onKeyPress("m", () => music.paused = !music.paused)
+  
+  add([
+    text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
       size: 28
     }),
+    anchor("center"),
+    pos(width() / 2, 600),
   ])
+
+  onKeyPress("space", () => go("player1"));
+  onKeyPress("escape", () => go("home"));
+
 })
 
 
 //starting game
-go('home')
+go('easterEgg')
