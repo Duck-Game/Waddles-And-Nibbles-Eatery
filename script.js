@@ -10,6 +10,12 @@ loadSound("bonk", "sprites/bonk.mp3")
 loadSound("nibbles-quack", "sprites/nibbles-quack.mp3")
 loadSound("waddles-quack", "sprites/waddles-quack.mp3")
 loadSound("home-music", "sprites/home-music.mp3")
+loadSound("scary-music", "sprites/scary-music.mp3")
+loadSound("touch-box", "sprites/touch-box.mp3")
+loadSound("chomp", "sprites/chomp.mp3")
+loadSound("arcade", "sprites/arcade.mp3")
+loadSound("trash", "sprites/trash.mp3")
+loadSound("warp", "sprites/warp.mp3")
 
 
 //loading font
@@ -149,10 +155,14 @@ scene('player1', () => {
       destroy(waddlesSprites[i])
     }
     waddlesContainerPos = 1015
+
   }
 
   //deleting items from array
   waddles.onCollide("trash", () => {
+    play("trash", {
+      volume: 0.2,
+    })
     waddlesContainer.length = 0
     resetWaddlesSprites()
     shake(2.6)
@@ -164,30 +174,35 @@ scene('player1', () => {
     waddlesContainer.push("bun")
     waddlesSprites.push(add([sprite('bun'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("cheese", () => {
     waddlesContainer.push("cheese")
     waddlesSprites.push(add([sprite('cheese'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("meat", () => {
     waddlesContainer.push("meat")
     waddlesSprites.push(add([sprite('meat'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("lettuce", () => {
     waddlesContainer.push("lettuce")
     waddlesSprites.push(add([sprite('lettuce'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("peppers", () => {
     waddlesContainer.push("peppers")
     waddlesSprites.push(add([sprite('peppers'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   //waddles container name
@@ -353,7 +368,13 @@ scene('player1', () => {
     let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
-
+    
+    enemy.onCollide('waddles', () => {
+      play("warp", {
+          volume: 0.3,
+        })
+    })
+    
     onUpdate(() => {
       enemy.onCollide('waddles', () => {
         shake(2.5)
@@ -370,6 +391,10 @@ scene('player1', () => {
       score1.value++
       score1.text = `Score: ${score1.value}`
       waddlesContainer.length = 0
+      
+      play("arcade", {
+        volume: 0.2,
+      })
 
       //reset food order
       orderUpdate()
@@ -540,6 +565,9 @@ scene('player2', () => {
     waddlesContainer.length = 0
     resetWaddlesSprites()
     shake(2.6)
+    play("trash", {
+      volume: 0.2,
+    })
   });
 
   //collecting items and storing in array
@@ -547,30 +575,35 @@ scene('player2', () => {
     waddlesContainer.push("bun")
     waddlesSprites.push(add([sprite('bun'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("cheese", () => {
     waddlesContainer.push("cheese")
     waddlesSprites.push(add([sprite('cheese'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("meat", () => {
     waddlesContainer.push("meat")
     waddlesSprites.push(add([sprite('meat'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("lettuce", () => {
     waddlesContainer.push("lettuce")
     waddlesSprites.push(add([sprite('lettuce'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   waddles.onCollide("peppers", () => {
     waddlesContainer.push("peppers")
     waddlesSprites.push(add([sprite('peppers'), pos(waddlesContainerPos, 200), scale(1.5)]))
     waddlesContainerPos += 70
+    play("touch-box")
   })
 
   add([
@@ -652,12 +685,15 @@ scene('player2', () => {
   onSceneLeave(() => music.paused = true)
 
   // hitting nibbles
-  loadSound("bonk", "sprites/bonk.mp3")
-
+  
+  
   waddles.onCollide('nibbles', () => {
     shake(3)
     addKaboom(nibbles.pos)
     play("bonk")
+    waddles.pos.x = waddles.pos.x + 50
+    nibbles.pos.x = nibbles.pos.x - 50
+    
   })
 
   //score text for waddles
@@ -814,6 +850,18 @@ scene('player2', () => {
     let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
+    
+    enemy.onCollide('waddles', () => {
+      play("warp", {
+          volume: 0.3,
+        })
+    })
+    
+    enemy.onCollide('nibbles', () => {
+      play("warp", {
+          volume: 0.3,
+        })
+    })
 
     onUpdate(() => {
       enemy.onCollide('waddles', () => {
@@ -840,6 +888,10 @@ scene('player2', () => {
       waddlesContainer.length = 0
       nibblesContainer.length = 0
 
+      play("arcade", {
+        volume: 0.2,
+      })
+      
       //reset food order
       orderUpdate()
 
@@ -1147,8 +1199,10 @@ scene("nibbles-win", () => {
 })
 
 scene("easterEgg", () => {
-
+  //background color
   setBackground(0, 0, 0)
+  
+  //background text
   add([
     text('Waddles and Nibbles were not your ordinary ducks. Underneath their seemingly\n innocent quacks and friendly demeanor lay a sinister motive. The forest animals\n had no idea that the burgers on the menu were made from duck meat – the very meat\n that belonged to their fellow kind. The two ducks, driven by a twisted\n desire for power and control, devised a plan to exploit their own species for\n their nefarious culinary pursuits.\n\n Hidden beneath the restaurant, in a damp and dimly lit cellar,\n Waddles and Nibbles conducted their gruesome operations. Ducks from all\n around the forest would mysteriously vanish, only to reappear on the menu\n as "Duck Delight Burgers." The eerie disappearance of fellow ducks\n fueled rumors and unease throughout the forest, but no one could\n ever trace the sinister source.', {
       font: 'arcade',
@@ -1159,9 +1213,7 @@ scene("easterEgg", () => {
     pos(width() / 2, height() / 2),
   ])
 
-  //music
-  loadSound("scary-music", "sprites/scary-music.mp3")
-
+  //play music
   const music = play("scary-music", {
     volume: 0.1,
     loop: true,
@@ -1169,6 +1221,7 @@ scene("easterEgg", () => {
 
   onKeyPress("m", () => music.paused = !music.paused)
 
+  //return to scree/ replay
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
