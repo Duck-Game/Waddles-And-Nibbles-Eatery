@@ -127,28 +127,6 @@ scene('player1', () => {
     waddles.move(0, SPEED)
   });
 
-  // movement duck 2
-
-  // onKeyDown('d', () => {
-  //   nibbles.use(sprite('nibbles-right'))
-  //   nibbles.move(SPEED, 0)
-  // });
-
-  // onKeyDown('a', () => {
-  //   nibbles.use(sprite('nibbles-left'))
-  //   nibbles.move(-SPEED, 0)
-  // });
-
-  // onKeyDown('w', () => {
-  //   nibbles.use(sprite('nibbles-back'))
-  //   nibbles.move(0, -SPEED)
-  // });
-
-  // onKeyDown('s', () => {
-  //   nibbles.use(sprite('nibbles-front'))
-  //   nibbles.move(0, SPEED)
-  // });
-
   //random order function
   let foods = ['cheese', 'meat', 'lettuce', 'peppers']
 
@@ -345,7 +323,7 @@ scene('player1', () => {
   //adding obstacles
   const addObstacle = () => {
     let randomY = rand(250, 650)
-    let enemy = add([sprite('burger'), pos(width() - 200, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
+    let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
 
@@ -382,7 +360,6 @@ scene('player1', () => {
     if (time < 1) {
       go('gameOver')
       music.paused = true
-      player1Scene = false
     }
 
     //constantly setting name
@@ -772,7 +749,7 @@ scene('player2', () => {
   //creating obstacles
   const addObstacle = () => {
     let randomY = rand(250, 650)
-    let enemy = add([sprite('burger'), pos(width() - 200, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
+    let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
 
@@ -1142,4 +1119,4 @@ scene("easterEgg", () => {
 
 
 //starting game
-go('home')
+go('player2')
