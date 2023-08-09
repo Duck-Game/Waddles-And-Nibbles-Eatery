@@ -65,22 +65,24 @@ scene('player1', () => {
     area(),
     pos(0, 150),
     body({ isStatic: true }),
+    color(223, 195, 150)
   ]);
-  
+
   add([
     rect(width(), 2),
     area(),
     pos(0, 660),
     body({ isStatic: true }),
+    color(182, 122, 74)
   ]);
-  
+
   add([
     rect(2, height()),
     area(),
     pos(-2, 0),
     body({ isStatic: true }),
   ]);
-  
+
   add([
     rect(2, height()),
     area(),
@@ -311,7 +313,7 @@ scene('player1', () => {
   }
   //adding obstacles
   const addObstacle = () => {
-    let randomY = rand(250, height() - 20)
+    let randomY = rand(250, 650)
     let enemy = add([sprite('burger'), pos(width() - 200, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
@@ -388,30 +390,34 @@ scene('player2', () => {
     area(),
     pos(0, 150),
     body({ isStatic: true }),
+    color(223, 195, 150)
   ]);
-  
-   add([
+
+  add([
     rect(width(), 2),
     area(),
     pos(0, 660),
     body({ isStatic: true }),
+    color(182, 122, 74)
   ]);
-  
+
   add([
     rect(2, height()),
     area(),
     pos(-2, 0),
     body({ isStatic: true }),
+    color(182, 122, 74)
   ]);
-  
+
   add([
     rect(2, height()),
     area(),
     pos(1450, 0),
     body({ isStatic: true }),
+    color(182, 122, 74)
   ]);
 
-  
+
   //setting sprite variables
   const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles']);
   const nibbles = add([sprite('nibbles-front'), pos(200, 168), scale(2.5), area(), body(), 'nibbles']);
@@ -612,7 +618,6 @@ scene('player2', () => {
   ])
 
   // quacking 
-
   onKeyPress("q", () => play("nibbles-quack"))
   onKeyPress("z", () => play("waddles-quack"))
 
@@ -678,7 +683,7 @@ scene('player2', () => {
 
   //creating obstacles
   const addObstacle = () => {
-    let randomY = rand(250, height() - 20)
+    let randomY = rand(250, 650)
     let enemy = add([sprite('burger'), pos(width() - 200, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
@@ -774,28 +779,28 @@ scene("home", () => {
   ])
 
   //load Sprite
-  const waddles = add([sprite('front-duck'), pos(200, 250), scale(2.5), area(), body(), 'waddles', {
+  const waddles = add([sprite('front-duck'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), body(), 'waddles', {
     speed: choose([230, 300]),
     dir: choose([-1, 1]),
   }]);
-  const nibbles = add([sprite('nibbles-front'), pos(800, 70), scale(2.5), area(), body(), 'nibbles', {
+  const nibbles = add([sprite('nibbles-front'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), body(), 'nibbles', {
     speed: choose([180, 90]),
     dir: choose([-2, 2]),
   }]);
 
-  const burger = add([sprite('burger'), pos(90, 70), scale(2.5), area(), body(), 'burger', {
+  const burger = add([sprite('burger'), pos(rand(0, width() - 50, ), rand(0, height() - 130)), scale(2.5), area(), body(), 'burger', {
     speed: choose([100, 50]),
     dir: choose([-3, 3]),
   }]);
 
   //nibbles motion 
   const nibblesAi = () => {
-    const left = nibbles.move(nibbles.dir * nibbles.speed, 0)
+    nibbles.move(nibbles.dir * nibbles.speed, 0)
     if (nibbles.pos.x < 0 || nibbles.pos.x > width() - 90) {
       nibbles.dir = -nibbles.dir
     }
 
-    const right = nibbles.move(0, nibbles.dir * nibbles.speed)
+    nibbles.move(0, nibbles.dir * nibbles.speed)
     if (nibbles.pos.y < 0 || nibbles.pos.y > height() - 120) {
       nibbles.dir = -nibbles.dir;
     }
@@ -820,15 +825,10 @@ scene("home", () => {
     if (burger.pos.x < 0 || burger.pos.x > width() - 90) {
       burger.dir = -burger.dir
     }
-
-    const right = burger.move(0, burger.dir * burger.speed)
-    if (burger.pos.y < 0 || burger.pos.y > height() - 120) {
-      burger.dir = -burger.dir;
-    }
   }
 
 
-  onUpdate(() => {
+  loop(0.015, () => {
     nibblesAi()
     waddlesAi()
     burgerAi()
@@ -923,7 +923,18 @@ scene("gameOver", () => {
     color(0, 0, 0),
   ])
 
-  onKeyPress("space", () => go("home"));
+  add([
+    text('Press esc to go home or press space to restart', {
+      font: 'arcade',
+      size: 28
+    }),
+    anchor("center"),
+    pos(width() / 2, (height() / 2) + 40),
+    color(0, 0, 0),
+  ])
+
+  onKeyPress("space", () => go("player1"));
+  onKeyPress("escape", () => go("home"));
 })
 
 scene("waddles-win", () => {
