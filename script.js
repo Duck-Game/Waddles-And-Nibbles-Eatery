@@ -1576,7 +1576,7 @@ scene("easterEgg", () => {
 
 
   onKeyPress("space", () => {
-    go("player1")
+    go("player2")
     play("home-click", {
       volume: 0.2,
     })
