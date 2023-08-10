@@ -49,6 +49,7 @@ loadSprite('nibbles-left', 'sprites/nibbles-left.png')
 loadSprite('burger', 'sprites/burger.png')
 loadSprite('taco', 'sprites/taco.png')
 loadSprite('egg', 'sprites/egg.png')
+loadSprite('octoducktapus', 'sprites/octoducktapus.png')
 
 
 
@@ -419,9 +420,9 @@ scene('player1', () => {
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
 
   //constantly check for these conditions
   onUpdate(() => {
@@ -931,9 +932,18 @@ scene('player2', () => {
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
+
+  let octo = true;
+  const octoducktapus = add([sprite('octoducktapus'), pos(5000, 5066), scale(1.5), area(), body({ isStatic: true }), 'octoducktapus', ]);
+  octoducktapus.onCollide('waddles', () => {
+    go('easterEgg')
+  })
+  octoducktapus.onCollide('nibbles', () => {
+    go('easterEgg')
+  })
 
   //constantly check for these conditions
   onUpdate(() => {
@@ -958,7 +968,7 @@ scene('player2', () => {
       shake(2)
 
       // Winner
-      if (waddlesScore.value === 1) {
+      if (waddlesScore.value === 10) {
         go("waddles-win")
       }
 
@@ -983,13 +993,24 @@ scene('player2', () => {
       shake(2)
 
       //nibles win
-      if (nibblesScore.value === 1) {
+      if (nibblesScore.value === 10) {
         go("nibbles-win")
       }
     }
 
     waddlesName()
     nibblesName()
+
+    if (waddlesScore.value === 8 && octo) {
+      octoducktapus.pos.x = 1000;
+      octoducktapus.pos.y = 166;
+      octo = false;
+    }
+    if (nibblesScore.value === 8 && octo) {
+      octoducktapus.pos.x = 1000;
+      octoducktapus.pos.y = 166;
+      octo = false;
+    }
   })
 })
 
@@ -1143,7 +1164,7 @@ scene("home", () => {
   }
 
 
-//initialize Ai
+  //initialize Ai
   loop(0.015, () => {
     nibblesAi()
     waddlesAi()
@@ -1153,7 +1174,7 @@ scene("home", () => {
     bunAi()
     peppersAi()
   })
-  
+
   //play music
 
   const music = play("home-music", {
@@ -1165,7 +1186,7 @@ scene("home", () => {
   onKeyPress("m", () => music.paused = !music.paused)
 
   onSceneLeave(() => music.paused = true)
-  
+
 
   function addButton(txt, p, f) {
 
@@ -1268,7 +1289,7 @@ scene("gameOver", () => {
 
   //add music
   play("game-over")
-  
+
   //replay/ return to home screen
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
@@ -1283,15 +1304,15 @@ scene("gameOver", () => {
   onKeyPress("space", () => {
     go("player1")
     play("home-click", {
-        volume: 0.2,
+      volume: 0.2,
     })
-    });
+  });
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
 })
 
 
@@ -1324,8 +1345,8 @@ scene("waddles-win", () => {
     }),
     pos(620, 400),
   ])
-  
-    
+
+
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
@@ -1372,18 +1393,18 @@ scene("waddles-win", () => {
   }
   loop(rand(1, 0.2), confetti)
 
-   onKeyPress("space", () => {
+  onKeyPress("space", () => {
     go("player2")
     play("home-click", {
-        volume: 0.2,
+      volume: 0.2,
     })
-    });
+  });
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
 })
 
 
@@ -1418,7 +1439,7 @@ scene("nibbles-win", () => {
     }),
     pos(620, 400),
   ])
-  
+
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
       font: 'arcade',
@@ -1464,30 +1485,30 @@ scene("nibbles-win", () => {
   }
   loop(rand(1, 0.2), confetti)
 
-   onKeyPress("space", () => {
+  onKeyPress("space", () => {
     go("player2")
     play("home-click", {
-        volume: 0.2,
+      volume: 0.2,
     })
-    });
+  });
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
 
 
 })
 
 scene("howTo", () => {
-  
+
   add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
 
-   add([
+  add([
     text('HOW TO PLAY', {
       font: 'arcade',
       size: 50,
@@ -1497,13 +1518,13 @@ scene("howTo", () => {
     pos(width() / 2, 26),
   ])
 
-  
+
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
 })
 
 scene("easterEgg", () => {
@@ -1553,18 +1574,18 @@ scene("easterEgg", () => {
   ])
 
 
-   onKeyPress("space", () => {
+  onKeyPress("space", () => {
     go("player1")
     play("home-click", {
-        volume: 0.2,
+      volume: 0.2,
     })
-    });
+  });
   onKeyPress("escape", () => {
     go("home")
     play("home-click", {
-        volume: 0.2,
-      })
-    });
+      volume: 0.2,
+    })
+  });
 
   // onSceneLeave(() => music.paused = true)
 
@@ -1573,5 +1594,3 @@ scene("easterEgg", () => {
 
 //starting game
 go('home')
-
-
