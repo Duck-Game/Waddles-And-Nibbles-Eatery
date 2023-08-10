@@ -1013,7 +1013,7 @@ scene('player2', () => {
 scene("home", () => {
 
   //add background
-  const screen = add([
+  add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
@@ -1230,7 +1230,8 @@ scene("home", () => {
 
   }
   addButton("1 Player", vec2(width() / 2, (height() / 2) - 75), () => go("player1"))
-  addButton("2 Players", vec2(width() / 2, (height() / 2) + 75), () => go("player2"))
+  addButton("2 Players", vec2(width() / 2, (height() / 2) + 55), () => go("player2"))
+  addButton("How to Play", vec2(width() / 2, (height() / 2) + 190), () => go("howTo"))
 })
 
 
@@ -1479,6 +1480,32 @@ scene("nibbles-win", () => {
 
 })
 
+scene("howTo", () => {
+  
+  add([
+    sprite('homebg', { width: width(), height: height() }),
+    scale(1),
+  ])
+
+   add([
+    text('Hihihiihihgi', {
+      font: 'arcade',
+      size: 35,
+      align: 'center',
+    }),
+    anchor("center"),
+    pos(width() / 2, height() / 2 - 40),
+  ])
+
+  
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
+})
+
 scene("easterEgg", () => {
   //background color
   setBackground(0, 0, 0)
@@ -1546,3 +1573,5 @@ scene("easterEgg", () => {
 
 //starting game
 go('home')
+
+
