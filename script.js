@@ -1488,13 +1488,13 @@ scene("howTo", () => {
   ])
 
    add([
-    text('Hihihiihihgi', {
+    text('HOW TO PLAY', {
       font: 'arcade',
-      size: 35,
+      size: 50,
       align: 'center',
     }),
     anchor("center"),
-    pos(width() / 2, height() / 2 - 40),
+    pos(width() / 2, 26),
   ])
 
   
