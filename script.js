@@ -966,7 +966,7 @@ scene('player2', () => {
       shake(2)
 
       // Winner
-      if (waddlesScore.value === 3) {
+      if (waddlesScore.value === 10) {
         go("waddles-win")
       }
 
@@ -991,7 +991,7 @@ scene('player2', () => {
       shake(2)
 
       //nibles win
-      if (nibblesScore.value === 3) {
+      if (nibblesScore.value === 10) {
         go("nibbles-win")
       }
     }
@@ -999,12 +999,12 @@ scene('player2', () => {
     waddlesName()
     nibblesName()
 
-    if (waddlesScore.value === 2 && octo) {
+    if (waddlesScore.value === 8 && octo) {
       octoducktapus.pos.x = 1000;
       octoducktapus.pos.y = 166;
       octo = false;
     }
-    if (nibblesScore.value === 2 && octo) {
+    if (nibblesScore.value === 8 && octo) {
       octoducktapus.pos.x = 1000;
       octoducktapus.pos.y = 166;
       octo = false;
