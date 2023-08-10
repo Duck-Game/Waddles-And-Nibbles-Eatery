@@ -17,6 +17,8 @@ loadSound("arcade", "sprites/arcade.mp3")
 loadSound("trash", "sprites/trash.mp3")
 loadSound("warp", "sprites/warp.mp3")
 loadSound("win", "sprites/win.mp3")
+loadSound("home-hover", "sprites/home-hover.mp3")
+loadSound("home-click", "sprites/home-click.mp3")
 
 //loading font
 loadFont('arcade', 'REDENSEK.TTF')
@@ -509,8 +511,8 @@ scene('player2', () => {
 
 
   //setting sprite variables
-  const waddles = add([sprite('front-duck'), pos(740, 190), scale(2.5), area(), body(), 'waddles']);
-  const nibbles = add([sprite('nibbles-front'), pos(650, 180), scale(2.5), area(), body(), 'nibbles']);
+  const waddles = add([sprite('front-duck'), pos(740, 290), scale(2.5), area(), body(), 'waddles']);
+  const nibbles = add([sprite('nibbles-front'), pos(650, 280), scale(2.5), area(), body(), 'nibbles']);
   const leftCounter = add([sprite('left-counter'), pos(450, 140), scale(1.3), area(), body({ isStatic: true })]);
   const rightCounter = add([sprite('right-counter'), pos(800, 145), scale(1.3), area(), body({ isStatic: true })]);
   const trashcan = add([sprite('trashcan'), pos(705, 165), scale(1.2), area(), body({ isStatic: true }), 'trash']);
@@ -941,12 +943,12 @@ scene('player2', () => {
 
       //shake on complete order
       shake(2)
-      
+
       // Winner
-      if ( waddlesScore.value === 10){
+      if (waddlesScore.value === 1) {
         go("waddles-win")
       }
-      
+
     }
     else if (nibblesContainer.toString() === foodOrder.toString()) {
       nibblesScore.value++
@@ -966,9 +968,9 @@ scene('player2', () => {
 
       //shake on complete order
       shake(2)
-      
+
       //nibles win
-      if ( nibblesScore.value === 10){
+      if (nibblesScore.value === 1) {
         go("nibbles-win")
       }
     }
@@ -1174,11 +1176,21 @@ scene("home", () => {
 
     // onHoverUpdate() comes from area() component
     // it runs every frame when the object is being hovered
-    btn.onHoverUpdate(() => {
-      const t = time() * 10
-      btn.scale = vec2(1.2)
-      setCursor("pointer")
-    })
+    const music = () => {
+
+      btn.onHoverUpdate(() => {
+        const t = time() * 10
+        btn.scale = vec2(1.2)
+        setCursor("pointer")
+      })
+      
+      btn.onHover(()=> {
+        play("home-hover")
+      })
+
+    }
+    
+    music()
 
     // onHoverEnd() comes from area() component
     // it runs once when the object stopped being hovered
@@ -1190,6 +1202,9 @@ scene("home", () => {
     // onClick() comes from area() component
     // it runs once when the object is clicked
     btn.onClick(f)
+    btn.onClick(() => {
+      play("home-click")
+    })
 
     return btn
 
@@ -1246,20 +1261,20 @@ scene("gameOver", () => {
 })
 
 scene("waddles-win", () => {
-    add([
+  add([
     sprite('background', { width: width(), height: height() }),
     scale(1)
   ])
-  
+
   //Play sound
   let music = play("win", {
     volume: 0.2,
   })
   onKeyPress("m", () => music.paused = !music.paused)
-  
-   onSceneLeave(() => music.paused = true)
 
-//winning text
+  onSceneLeave(() => music.paused = true)
+
+  //winning text
   add([
     text("Waddles WINS!!", {
       size: 28,
@@ -1280,7 +1295,7 @@ scene("waddles-win", () => {
   const meatTable = add([sprite('meat-table'), pos(700, 500), scale(1.2), area(), body({ isStatic: true }), 'meat']);
   const lettuceTable = add([sprite('lettuce-table'), pos(900, 500), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
   const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'peppers']);
-  
+
   //confetti
   const sprites = [
     "peppers",
@@ -1290,39 +1305,39 @@ scene("waddles-win", () => {
     'bun',
     'burger',
     'egg',
-    ]
-    
-    // load elements on screen
-   const confetti = () => {
-     
+  ]
+
+  // load elements on screen
+  const confetti = () => {
+
     let randomX = rand(0, width())
     let particle = add([sprite(choose(sprites)), pos(randomX, 0), scale(1), area(), 'enemy', move(DOWN, 150),
       offscreen({ destroy: true })
     ])
   }
   loop(rand(1, 0.2), confetti)
-  
+
   onKeyPress("space", () => go("player2"));
   onKeyPress("escape", () => go("home"));
 
 })
 
 scene("nibbles-win", () => {
-   // background
+  // background
   add([
     sprite('background', { width: width(), height: height() }),
     scale(1)
   ])
-  
+
   //Play sound
   let music = play("win", {
     volume: 0.2,
   })
   onKeyPress("m", () => music.paused = !music.paused)
-  
+
   onSceneLeave(() => music.paused = true)
 
-//winning text
+  //winning text
   add([
     text("NIBBLES WINS!!", {
       size: 28,
@@ -1343,7 +1358,7 @@ scene("nibbles-win", () => {
   const meatTable = add([sprite('meat-table'), pos(700, 500), scale(1.2), area(), body({ isStatic: true }), 'meat']);
   const lettuceTable = add([sprite('lettuce-table'), pos(900, 500), scale(1.2), area(), body({ isStatic: true }), 'lettuce']);
   const pepperTable = add([sprite('pepper-table'), pos(1100, 500), scale(1.2), area(), body({ isStatic: true }), 'peppers']);
-  
+
   //confetti
   const sprites = [
     "peppers",
@@ -1353,22 +1368,22 @@ scene("nibbles-win", () => {
     'bun',
     'burger',
     'egg',
-    ]
-    
-    // load elements on screen
-   const confetti = () => {
-     
+  ]
+
+  // load elements on screen
+  const confetti = () => {
+
     let randomX = rand(0, width())
     let particle = add([sprite(choose(sprites)), pos(randomX, 0), scale(1), area(), 'enemy', move(DOWN, 150),
       offscreen({ destroy: true })
     ])
   }
   loop(rand(1, 0.2), confetti)
-  
+
   onKeyPress("space", () => go("player2"));
   onKeyPress("escape", () => go("home"));
 
-  
+
 })
 
 scene("easterEgg", () => {
