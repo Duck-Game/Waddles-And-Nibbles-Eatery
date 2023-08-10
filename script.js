@@ -19,6 +19,7 @@ loadSound("warp", "sprites/warp.mp3")
 loadSound("win", "sprites/win.mp3")
 loadSound("home-hover", "sprites/home-hover.mp3")
 loadSound("home-click", "sprites/home-click.mp3")
+loadSound("game-over", "sprites/game-over.mp3")
 
 //loading font
 loadFont('arcade', 'REDENSEK.TTF')
@@ -216,9 +217,8 @@ scene('player1', () => {
     pos(1130, 167),
   ])
 
-  //play Music 
   const music = play("music", {
-    paused: true,
+    paused: false,
     volume: 0.1,
     loop: true
   })
@@ -416,7 +416,12 @@ scene('player1', () => {
   }
   loop(rand(2, 4), addObstacle)
 
-  onKeyPress("escape", () => go("home"));
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
 
   //constantly check for these conditions
   onUpdate(() => {
@@ -712,9 +717,10 @@ scene('player2', () => {
     pos(160, 162),
   ])
 
-  //play Music 
+
   const music = play("music", {
-    paused: true,
+    //changed true to false
+    paused: false,
     volume: 0.1,
     loop: true
   })
@@ -722,6 +728,7 @@ scene('player2', () => {
   onKeyPress("m", () => music.paused = !music.paused)
 
   onSceneLeave(() => music.paused = true)
+
 
   // hitting nibbles
 
@@ -920,7 +927,13 @@ scene('player2', () => {
   loop(rand(2, 4), addObstacle)
 
   //escape game
-  onKeyPress("escape", () => go("home"));
+
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
 
   //constantly check for these conditions
   onUpdate(() => {
@@ -1000,7 +1013,7 @@ scene('player2', () => {
 scene("home", () => {
 
   //add background
-  add([
+  const screen = add([
     sprite('homebg', { width: width(), height: height() }),
     scale(1),
   ])
@@ -1130,7 +1143,7 @@ scene("home", () => {
   }
 
 
-
+//initialize Ai
   loop(0.015, () => {
     nibblesAi()
     waddlesAi()
@@ -1140,16 +1153,19 @@ scene("home", () => {
     bunAi()
     peppersAi()
   })
+  
+  //play music
 
   const music = play("home-music", {
-    paused: true,
-    volume: 0.1,
+    paused: false,
+    volume: 0.2,
     loop: true
   })
 
   onKeyPress("m", () => music.paused = !music.paused)
 
   onSceneLeave(() => music.paused = true)
+  
 
   function addButton(txt, p, f) {
 
@@ -1176,21 +1192,23 @@ scene("home", () => {
 
     // onHoverUpdate() comes from area() component
     // it runs every frame when the object is being hovered
-    const music = () => {
+    const sound = () => {
 
       btn.onHoverUpdate(() => {
         const t = time() * 10
         btn.scale = vec2(1.2)
         setCursor("pointer")
       })
-      
-      btn.onHover(()=> {
-        play("home-hover")
+
+      btn.onHover(() => {
+        play("home-hover", {
+          volume: 0.2,
+        })
       })
 
     }
-    
-    music()
+
+    sound()
 
     // onHoverEnd() comes from area() component
     // it runs once when the object stopped being hovered
@@ -1203,7 +1221,9 @@ scene("home", () => {
     // it runs once when the object is clicked
     btn.onClick(f)
     btn.onClick(() => {
-      play("home-click")
+      play("home-click", {
+        volume: 0.2,
+      })
     })
 
     return btn
@@ -1245,6 +1265,9 @@ scene("gameOver", () => {
     color(0, 0, 0),
   ])
 
+  //add music
+  play("game-over")
+  
   //replay/ return to home screen
   add([
     text('Press  esc  to  go  home  or  press  space  to  restart', {
@@ -1256,9 +1279,27 @@ scene("gameOver", () => {
     color(0, 0, 0),
   ])
 
-  onKeyPress("space", () => go("player1"));
-  onKeyPress("escape", () => go("home"));
+  onKeyPress("space", () => {
+    go("player1")
+    play("home-click", {
+        volume: 0.2,
+    })
+    });
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
 })
+
+
+
+
+
+
+
+
 
 scene("waddles-win", () => {
   add([
@@ -1282,6 +1323,19 @@ scene("waddles-win", () => {
     }),
     pos(620, 400),
   ])
+  
+    
+  add([
+    text('Press  esc  to  go  home  or  press  space  to  restart', {
+      font: 'arcade',
+      size: 38,
+      align: 'center'
+    }),
+    anchor("center"),
+    pos(width() / 2, 610),
+    color(180, 180, 180)
+  ])
+
 
   const waddles = add([sprite('front-duck'), pos(650, 250), scale(5), area(), body(), 'waddles']);
   const nibbles = add([sprite('nibbles-front'), pos(100, 220), scale(2.5), area(), body(), 'nibbles']);
@@ -1317,10 +1371,28 @@ scene("waddles-win", () => {
   }
   loop(rand(1, 0.2), confetti)
 
-  onKeyPress("space", () => go("player2"));
-  onKeyPress("escape", () => go("home"));
-
+   onKeyPress("space", () => {
+    go("player2")
+    play("home-click", {
+        volume: 0.2,
+    })
+    });
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
 })
+
+
+
+
+
+
+
+
+
 
 scene("nibbles-win", () => {
   // background
@@ -1344,6 +1416,17 @@ scene("nibbles-win", () => {
       align: 'center',
     }),
     pos(620, 400),
+  ])
+  
+  add([
+    text('Press  esc  to  go  home  or  press  space  to  restart', {
+      font: 'arcade',
+      size: 38,
+      align: 'center'
+    }),
+    anchor("center"),
+    pos(width() / 2, 610),
+    color(180, 180, 180)
   ])
 
   const waddles = add([sprite('front-duck'), pos(100, 220), scale(2.5), area(), body(), 'waddles']);
@@ -1380,8 +1463,18 @@ scene("nibbles-win", () => {
   }
   loop(rand(1, 0.2), confetti)
 
-  onKeyPress("space", () => go("player2"));
-  onKeyPress("escape", () => go("home"));
+   onKeyPress("space", () => {
+    go("player2")
+    play("home-click", {
+        volume: 0.2,
+    })
+    });
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
 
 
 })
@@ -1402,12 +1495,23 @@ scene("easterEgg", () => {
   ])
 
   //play music
-  const music = play("scary-music", {
-    volume: 0.1,
-    loop: true,
-  })
 
-  onKeyPress("m", () => music.paused = !music.paused)
+  // const music = play("scary-music", {
+  //   paused: false,
+  //   volume: 0.1,
+  //   loop: true
+  // })
+
+  // onKeyPress("m", () => music.paused = !music.paused)
+
+  // onSceneLeave(() => music.paused = true)
+
+  // const music = play("scary-music", {
+  //   volume: 0.1,
+  //   loop: true,
+  // })
+
+  // onKeyPress("m", () => music.paused = !music.paused)
 
   //return to screen / replay
   add([
@@ -1421,10 +1525,21 @@ scene("easterEgg", () => {
     color(180, 180, 180)
   ])
 
-  onKeyPress("space", () => go("player1"));
-  onKeyPress("escape", () => go("home"));
 
-  onSceneLeave(() => music.paused = true)
+   onKeyPress("space", () => {
+    go("player1")
+    play("home-click", {
+        volume: 0.2,
+    })
+    });
+  onKeyPress("escape", () => {
+    go("home")
+    play("home-click", {
+        volume: 0.2,
+      })
+    });
+
+  // onSceneLeave(() => music.paused = true)
 
 })
 
