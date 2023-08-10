@@ -50,7 +50,7 @@ loadSprite('burger', 'sprites/burger.png')
 loadSprite('taco', 'sprites/taco.png')
 loadSprite('egg', 'sprites/egg.png')
 loadSprite('octoducktapus', 'sprites/octoducktapus.png')
-
+loadSprite('banana', 'sprites/banana.png')
 
 
 
@@ -397,7 +397,7 @@ scene('player1', () => {
   //adding obstacles
   const addObstacle = () => {
     let randomY = rand(250, 650)
-    let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
+    let enemy = add([sprite('banana'), pos(width() - 80, randomY), scale(0.035), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
 
@@ -732,8 +732,6 @@ scene('player2', () => {
 
 
   // hitting nibbles
-
-
   waddles.onCollide('nibbles', () => {
     shake(3)
     addKaboom(nibbles.pos)
@@ -894,7 +892,7 @@ scene('player2', () => {
   //creating obstacles
   const addObstacle = () => {
     let randomY = rand(250, 650)
-    let enemy = add([sprite('burger'), pos(width() - 80, randomY), scale(1), area(), 'enemy', move(LEFT, 150),
+    let enemy = add([sprite('banana'), pos(width() - 80, randomY), scale(0.035), area(), 'enemy', move(LEFT, 150),
       offscreen({ destroy: true })
     ])
 
@@ -1517,9 +1515,9 @@ scene("howTo", () => {
     anchor("center"),
     pos(width() / 2, 26),
   ])
-  
-    add([
-    text('"Objective: \nYour goal is to assemble as many burgers as possible within the time limit. Each burger requires a bun, patty, lettuce, tomato, and cheese. Work together with your friends to tackle increasingly complex orders and deliver them before the hungry customers lose their patience!\nControls:\nUse the arrow keys (up, down, left, right) or WASD keys to move your character around the kitchen.\nCollide into ingredients to pick them up."', {
+
+  add([
+    text('Objective: \nYour goal is to assemble as many burgers as possible within the time limit. Each burger requires a bun, patty, lettuce, tomato, and cheese. Work together with your friends to tackle increasingly complex orders and deliver them before the hungry customers lose their patience!\nControls:\nUse the arrow keys (up, down, left, right) or WASD keys to move your character around the kitchen.\nCollide into ingredients to pick them up.', {
       font: 'arcade',
       size: 40,
       align: 'center',
@@ -1527,7 +1525,7 @@ scene("howTo", () => {
     }),
     anchor("center"),
     pos(width() / 2, 350),
-    
+
   ])
 
   onKeyPress("escape", () => {
@@ -1554,23 +1552,15 @@ scene("easterEgg", () => {
   ])
 
   //play music
+  const music = play("scary-music", {
+    //changed true to false
+    paused: false,
+    volume: 0.45,
+    loop: true
+  })
 
-  // const music = play("scary-music", {
-  //   paused: false,
-  //   volume: 0.1,
-  //   loop: true
-  // })
-
-  // onKeyPress("m", () => music.paused = !music.paused)
-
-  // onSceneLeave(() => music.paused = true)
-
-  // const music = play("scary-music", {
-  //   volume: 0.1,
-  //   loop: true,
-  // })
-
-  // onKeyPress("m", () => music.paused = !music.paused)
+  onKeyPress("m", () => music.paused = !music.paused)
+  onSceneLeave(() => music.paused = true)
 
   //return to screen / replay
   add([
@@ -1597,8 +1587,6 @@ scene("easterEgg", () => {
       volume: 0.2,
     })
   });
-
-  // onSceneLeave(() => music.paused = true)
 
 })
 
