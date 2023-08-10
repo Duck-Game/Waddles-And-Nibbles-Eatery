@@ -1517,7 +1517,18 @@ scene("howTo", () => {
     anchor("center"),
     pos(width() / 2, 26),
   ])
-
+  
+    add([
+    text('"Objective: \nYour goal is to assemble as many burgers as possible within the time limit. Each burger requires a bun, patty, lettuce, tomato, and cheese. Work together with your friends to tackle increasingly complex orders and deliver them before the hungry customers lose their patience!\nControls:\nUse the arrow keys (up, down, left, right) or WASD keys to move your character around the kitchen.\nCollide into ingredients to pick them up."', {
+      font: 'arcade',
+      size: 40,
+      align: 'center',
+      width: 1300,
+    }),
+    anchor("center"),
+    pos(width() / 2, 350),
+    
+  ])
 
   onKeyPress("escape", () => {
     go("home")
